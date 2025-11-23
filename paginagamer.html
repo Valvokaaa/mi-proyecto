@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Gamer</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url("imagenes/bt21.jpg") 
+                        no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+        a {
+            padding: 15px 30px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .btn {
+            padding: 20px 40px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px #9d4bff, 0 0 40px #00d4ff inset;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 30px #b26dff, 0 0 60px #00e1ff inset;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="btn">Menú Gamer</a>
+</nav>
+
+</body>
+</html>
