@@ -1,57 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página del Menú Gamer</title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-
-            /* Fondo usando la imagen kwai.jpg */
-            background: url("imagenes/kwai.jpg") no-repeat center center fixed;
-            background-size: cover;
-
-            color: #00aaff; /* Color azul */
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             text-align: center;
+            /* Fondo con imagen */
+            background: url("imagenes/kwai.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #00aaff;
+            position: relative;
+        }
+
+        /* Overlay oscuro para mejorar la legibilidad */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Oscuro semitransparente */
+            z-index: 0;
         }
 
         h1 {
             font-size: 3rem;
             margin-bottom: 40px;
             text-shadow: 0 0 10px #00aaff;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border-radius: 10px;
-            background: rgba(0, 170, 255, 0.15); /* Fondo semi-transparente azul */
-            backdrop-filter: blur(4px);
-            color: #00aaff; /* Texto azul */
-            text-decoration: none;
-            font-size: 1.5rem;
-            border: 2px solid rgba(0, 170, 255, 0.5);
-            transition: 0.3s;
-            cursor: pointer;
-            margin: 10px; /* Espaciado entre botones */
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background: rgba(0, 170, 255, 0.3);
-            box-shadow: 0 0 15px #00aaff, 0 0 30px rgba(0, 170, 255, 0.5) inset;
+            position: relative;
+            z-index: 1;
         }
 
         .botonera {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 15px; /* Espaciado entre botones */
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 10px;
+            background: rgba(0, 170, 255, 0.2); /* Fondo semitransparente azul */
+            backdrop-filter: blur(5px);
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            border: 2px solid rgba(0, 170, 255, 0.5);
+            transition: 0.3s;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: rgba(0, 170, 255, 0.4);
+            box-shadow: 0 0 15px #00aaff, 0 0 30px rgba(0, 170, 255, 0.5) inset;
+            transform: scale(1.05);
         }
     </style>
 </head>
