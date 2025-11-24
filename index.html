@@ -10,9 +10,10 @@
             margin: 0;
             font-family: Arial, sans-serif;
 
-            /* Fondo con imagen en pantalla completa */
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                        url("imagenes/bt21.jpg") no-repeat center center fixed;
+            /* Fondo con imagen y capa oscurecida */
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+                url("imagenes/bt21.jpg") no-repeat center center fixed;
             background-size: cover;
 
             color: white;
@@ -20,57 +21,63 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         nav {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            text-align: center;
+            align-items: center;
         }
 
-        a {
-            padding: 15px 30px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(4px);
-            color: white;
-            text-decoration: none;
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-
-        a:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
+        /* 🌟 Botón mejorado Glassmorphism Gamer */
         .btn {
-            padding: 20px 40px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 20px #9d4bff, 0 0 40px #00d4ff inset;
-            font-size: 2rem;
+            padding: 22px 45px;
+            border-radius: 20px;
+
+            background: rgba(0, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+
+            border: 2px solid rgba(0, 255, 255, 0.7);
+            color: white;
+            font-size: 2.1rem;
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            transition: 0.3s;
+
+            box-shadow:
+                0 0 20px #00eaff,
+                0 0 40px #00eaff inset,
+                0 0 10px rgba(255, 255, 255, 0.3);
+
+            transition: 0.4s ease;
             cursor: pointer;
+
+            animation: flotar 3s ease-in-out infinite;
         }
 
+        /* Hover brillante */
         .btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 30px #b26dff, 0 0 60px #00e1ff inset;
-            transform: scale(1.05);
+            transform: scale(1.1);
+            box-shadow:
+                0 0 30px #00f7ff,
+                0 0 60px #00f7ff inset,
+                0 0 15px rgba(255, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.28);
+        }
+
+        /* ✨ Animación flotante */
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
 
 <body>
-
-<nav>
-    <a class="btn">Menú Gamer</a>
-</nav>
-
+    <nav>
+        <a class="btn">Menú Gamer</a>
+    </nav>
 </body>
 </html>
