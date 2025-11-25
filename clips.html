@@ -1,175 +1,261 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Clips - Menú Gamer</title>
-
 <style>
-/* ===== Fondo animado retro con neón ===== */
-body {
+  body {
     margin: 0;
-    font-family: "Consolas", monospace;
+    font-family: 'Courier New', Courier, monospace;
     height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #00ffff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    text-align: center;
-    color: #00eaff;
-    background: radial-gradient(circle at center, #120025, #000000 70%);
-    overflow-y: auto;
-    position: relative;
-    padding-top: 40px;
-}
+    justify-content: start;
+    padding: 20px;
+    overflow-x: hidden;
+  }
 
-/* Líneas neón animadas */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(
-        90deg,
-        rgba(0, 255, 255, 0.15) 0px,
-        rgba(0, 255, 255, 0.15) 3px,
-        transparent 3px,
-        transparent 60px
-    );
-    animation: slide 6s linear infinite;
-    transform: rotate(25deg);
-    opacity: 0.25;
-    z-index: 0;
-}
+  h1 {
+    font-size: 3rem;
+    text-shadow:
+      0 0 5px #00ffff,
+      0 0 10px #00ffff,
+      0 0 20px #00ffff,
+      0 0 40px #00ffff;
+    margin-bottom: 10px;
+    animation: neonGlow 2s ease-in-out infinite alternate;
+  }
 
-@keyframes slide {
-    from { transform: translateX(0) rotate(25deg); }
-    to { transform: translateX(-300px) rotate(25deg); }
-}
+  @keyframes neonGlow {
+    from {
+      text-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #00ffff,
+        0 0 40px #00ffff;
+    }
+    to {
+      text-shadow:
+        0 0 20px #00ffff,
+        0 0 30px #00ffff,
+        0 0 40px #00ffff,
+        0 0 60px #00ffff;
+    }
+  }
 
-/* Título estilo glitch */
-h1 {
-    font-size: 3.5rem;
-    letter-spacing: 4px;
-    margin-bottom: 20px;
-    text-shadow: 
-        0 0 10px #00fff2,
-        0 0 20px #ff00ff,
-        0 0 40px #00fff2;
-    animation: glitch 1.8s infinite;
-    z-index: 2;
-}
+  #uploadForm {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 
-@keyframes glitch {
-    0% { text-shadow: 2px 2px #ff00ff, -2px -2px #00fff2; }
-    50% { text-shadow: -2px 2px #ff00ff, 2px -2px #00fff2; }
-    100% { text-shadow: 2px 2px #ff00ff, -2px -2px #00fff2; }
-}
-
-/* Botón neon para subir video */
-input[type="file"] {
-    display: none;
-}
-
-.label-subir {
-    padding: 15px 45px;
-    background: rgba(0, 255, 255, 0.25);
-    border: 2px solid #00eaff;
-    color: #00eaff;
-    border-radius: 10px;
-    font-size: 1.4rem;
+  #uploadForm input[type="file"] {
+    color: #00ffff;
+    border-radius: 5px;
     cursor: pointer;
-    text-shadow: 0 0 10px #00ffff;
+  }
+
+  #uploadForm button {
+    padding: 10px 20px;
+    background: #00ffff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     box-shadow:
-        0 0 10px #00fff2,
-        inset 0 0 15px #00c8ff;
-    transition: 0.3s;
-    z-index: 2;
-}
+      0 0 10px #00ffff,
+      inset 0 0 10px #00ffff;
+  }
 
-.label-subir:hover {
-    transform: scale(1.1);
-    background: rgba(0, 255, 255, 0.5);
-}
+  #uploadForm button:hover {
+    background: #00b3b3;
+    box-shadow:
+      0 0 20px #00ffff,
+      inset 0 0 20px #00ffff;
+    transform: scale(1.05);
+  }
 
-/* Contenedor de los videos */
-#galeria {
-    margin-top: 40px;
-    width: 80%;
+  #clipList {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
     justify-content: center;
-    z-index: 2;
-}
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+  }
 
-/* Caja video */
-.video-box {
-    border: 2px solid #00eaff;
+  .clipCard {
+    background: #0c0c3a;
+    border: 2px solid #00ffff;
+    border-radius: 12px;
     padding: 10px;
-    border-radius: 10px;
-    background: rgba(0, 255, 255, 0.15);
-    box-shadow: 0 0 15px #00eaff;
-}
+    width: 280px;
+    box-shadow:
+      0 0 10px #00ffff,
+      inset 0 0 10px #00ffff;
+    animation: fadeInUp 0.7s ease forwards;
+  }
 
-video {
-    width: 300px;
-    border-radius: 10px;
-}
+  .clipCard video {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .clipCard button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #ff0057;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow:
+      0 0 10px #ff0057,
+      inset 0 0 10px #ff0057;
+    transition: all 0.3s ease;
+  }
+
+  .clipCard button:hover {
+    background: #cc0047;
+    box-shadow:
+      0 0 20px #ff0057,
+      inset 0 0 20px #ff0057;
+    transform: scale(1.05);
+  }
+
+  #message {
+    margin-bottom: 15px;
+    font-weight: bold;
+    height: 24px;
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    } 
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
-
 </head>
 <body>
 
-    <h1>🎥 Clips Guardados</h1>
+<h1>Clips</h1>
 
-    <label for="subirVideo" class="label-subir">Subir Clip</label>
-    <input type="file" id="subirVideo" accept="video/*">
+<div id="message"></div>
 
-    <div id="galeria"></div>
+<form id="uploadForm">
+  <input type="file" id="fileInput" accept="video/*" />
+  <button type="submit">Subir Clip</button>
+</form>
 
+<div id="clipList"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* === Cargar clips guardados === */
-window.onload = function() {
-    const guardados = JSON.parse(localStorage.getItem("clips")) || [];
+  // Configuración Supabase (tus datos aquí)
+  const supabaseUrl = 'https://owucpcdmojsksraccwny.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dWNwY2Rtb2pza3NyYWNjd255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMjg1NzQsImV4cCI6MjA3OTYwNDU3NH0.gh9xlOb19aG_2G6tmc46IKay1G4okZiM1ii2wWxB4FY';
 
-    guardados.forEach(dataURL => {
-        agregarClip(dataURL);
-    });
-};
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  const bucketName = 'clips';
 
-/* === Subir y guardar clips === */
-document.getElementById("subirVideo").addEventListener("change", function(event) {
-    const archivo = event.target.files[0];
-    const reader = new FileReader();
+  const fileInput = document.getElementById('fileInput');
+  const uploadForm = document.getElementById('uploadForm');
+  const clipList = document.getElementById('clipList');
+  const message = document.getElementById('message');
 
-    reader.onload = function(e) {
-        const dataURL = e.target.result;
+  async function listarClips() {
+    clipList.innerHTML = '';
+    message.textContent = 'Cargando clips...';
 
-        // Guardar en LocalStorage
-        let lista = JSON.parse(localStorage.getItem("clips")) || [];
-        lista.push(dataURL);
-        localStorage.setItem("clips", JSON.stringify(lista));
+    const { data, error } = await supabase.storage.from(bucketName).list('', { limit: 100, offset: 0, sortBy: { column: 'created_at', order: 'desc' } });
+    
+    if (error) {
+      message.textContent = 'Error cargando clips.';
+      console.error(error);
+      return;
+    }
 
-        // Mostrarlo en pantalla
-        agregarClip(dataURL);
-    };
+    if (data.length === 0) {
+      message.textContent = 'No hay clips subidos.';
+      return;
+    }
 
-    reader.readAsDataURL(archivo);
-});
+    message.textContent = '';
+    for (const file of data) {
+      const { data: urlData, error: urlError } = await supabase.storage.from(bucketName).getPublicUrl(file.name);
+      if (urlError) {
+        console.error('Error obteniendo URL:', urlError);
+        continue;
+      }
+      const clipCard = document.createElement('div');
+      clipCard.classList.add('clipCard');
+      clipCard.innerHTML = `
+        <video controls preload="metadata" src="${urlData.publicUrl}"></video>
+        <button data-filename="${file.name}">Eliminar</button>
+      `;
+      clipList.appendChild(clipCard);
 
-/* === Agregar clip a la galería === */
-function agregarClip(url) {
-    const caja = document.createElement("div");
-    caja.classList.add("video-box");
+      clipCard.querySelector('button').addEventListener('click', async () => {
+        const confirmed = confirm('¿Seguro quieres eliminar este clip?');
+        if (!confirmed) return;
+        const { error: delError } = await supabase.storage.from(bucketName).remove([file.name]);
+        if (delError) {
+          alert('Error eliminando clip');
+          console.error(delError);
+          return;
+        }
+        listarClips();
+      });
+    }
+  }
 
-    const video = document.createElement("video");
-    video.controls = true;
-    video.src = url;
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    message.textContent = '';
 
-    caja.appendChild(video);
-    document.getElementById("galeria").appendChild(caja);
-}
+    const file = fileInput.files[0];
+    if (!file) {
+      message.textContent = 'Por favor selecciona un video.';
+      return;
+    }
+    if (!file.type.startsWith('video/')) {
+      message.textContent = 'El archivo debe ser un video.';
+      return;
+    }
+
+    const fileName = `${Date.now()}_${file.name}`;
+
+    message.textContent = 'Subiendo clip...';
+
+    const { data, error } = await supabase.storage.from(bucketName).upload(fileName, file, { cacheControl: '3600', upsert: false });
+    if (error) {
+      message.textContent = 'Error subiendo clip.';
+      console.error(error);
+      return;
+    }
+
+    message.textContent = 'Clip subido con éxito!';
+    fileInput.value = '';
+    listarClips();
+  });
+
+  // Carga inicial de clips
+  listarClips();
 </script>
 
 </body>
