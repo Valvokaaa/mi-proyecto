@@ -13,19 +13,20 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     color: #00eaff;
     background: radial-gradient(circle at center, #120025, #000000 70%);
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
+    padding-top: 40px;
 }
 
-/* Líneas de neón moviéndose (fondo dinámico) */
+/* Líneas neón animadas */
 body::before {
     content: "";
-    position: absolute;
+    position: fixed;
     width: 200%;
     height: 200%;
     background: repeating-linear-gradient(
@@ -38,6 +39,7 @@ body::before {
     animation: slide 6s linear infinite;
     transform: rotate(25deg);
     opacity: 0.25;
+    z-index: 0;
 }
 
 @keyframes slide {
@@ -45,84 +47,109 @@ body::before {
     to { transform: translateX(-300px) rotate(25deg); }
 }
 
-/* ===== Título estilo retro neon glitch ===== */
+/* Título estilo glitch */
 h1 {
     font-size: 3.5rem;
     letter-spacing: 4px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-shadow: 
         0 0 10px #00fff2,
         0 0 20px #ff00ff,
         0 0 40px #00fff2;
     animation: glitch 1.8s infinite;
+    z-index: 2;
 }
 
-/* Efecto glitch suave */
 @keyframes glitch {
     0% { text-shadow: 2px 2px #ff00ff, -2px -2px #00fff2; }
     50% { text-shadow: -2px 2px #ff00ff, 2px -2px #00fff2; }
     100% { text-shadow: 2px 2px #ff00ff, -2px -2px #00fff2; }
 }
 
-/* ===== Contenedor de botones ===== */
-.botonera {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    position: relative;
-    z-index: 2;
+/* Botón neon para subir video */
+input[type="file"] {
+    display: none;
 }
 
-/* ===== Botones estilo neón holográfico ===== */
-.btn {
-    padding: 15px 50px;
-    border-radius: 12px;
-    background: rgba(0, 255, 255, 0.1);
+.label-subir {
+    padding: 15px 45px;
+    background: rgba(0, 255, 255, 0.25);
+    border: 2px solid #00eaff;
     color: #00eaff;
-    text-decoration: none;
-    font-size: 1.7rem;
-    border: 2px solid rgba(0, 255, 255, 0.6);
+    border-radius: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    text-shadow: 0 0 10px #00ffff;
     box-shadow:
         0 0 10px #00fff2,
         inset 0 0 15px #00c8ff;
-    transition: 0.3s ease;
-    animation: elevar 0.8s ease forwards;
-    opacity: 0;
+    transition: 0.3s;
+    z-index: 2;
 }
 
-/* Animación de aparición */
-@keyframes elevar {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.label-subir:hover {
+    transform: scale(1.1);
+    background: rgba(0, 255, 255, 0.5);
 }
 
-.btn:hover {
-    transform: scale(1.15);
-    background: rgba(0, 255, 255, 0.35);
-    box-shadow:
-        0 0 20px #00fff2,
-        0 0 40px #ff00ff,
-        inset 0 0 40px rgba(0, 255, 255, 0.5);
+/* Contenedor de los videos */
+#galeria {
+    margin-top: 40px;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    z-index: 2;
 }
 
-/* Retrasos para cada botón */
-.btn:nth-child(1) { animation-delay: 0.4s; }
-.btn:nth-child(2) { animation-delay: 0.6s; }
-.btn:nth-child(3) { animation-delay: 0.8s; }
-.btn:nth-child(4) { animation-delay: 1s; }
+/* Cada video */
+.video-box {
+    border: 2px solid #00eaff;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0, 255, 255, 0.15);
+    box-shadow: 0 0 15px #00eaff;
+}
+
+video {
+    width: 300px;
+    border-radius: 10px;
+}
 </style>
 
 </head>
 <body>
 
-    <h1>🎥 Clips</h1>
+    <h1>🎥 Clips Subidos</h1>
 
-    <div class="botonera">
-        <a href="#" class="btn">Clip 1</a>
-        <a href="#" class="btn">Clip 2</a>
-        <a href="#" class="btn">Clip 3</a>
-        <a href="menu.html" class="btn">Volver al Menú</a>
-    </div>
+    <!-- Botón para subir video -->
+    <label for="subirVideo" class="label-subir">Subir Clip</label>
+    <input type="file" id="subirVideo" accept="video/*" multiple>
+
+    <!-- Galería donde aparecerán los clips -->
+    <div id="galeria"></div>
+
+<script>
+document.getElementById("subirVideo").addEventListener("change", function(event) {
+    const archivos = event.target.files;
+
+    for (let archivo of archivos) {
+        const url = URL.createObjectURL(archivo);
+
+        // crear video
+        const contenedor = document.createElement("div");
+        contenedor.classList.add("video-box");
+
+        const video = document.createElement("video");
+        video.src = url;
+        video.controls = true;
+
+        contenedor.appendChild(video);
+        document.getElementById("galeria").appendChild(contenedor);
+    }
+});
+</script>
 
 </body>
 </html>
