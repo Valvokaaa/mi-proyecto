@@ -31,20 +31,8 @@
   }
 
   @keyframes neonGlow {
-    from {
-      text-shadow:
-        0 0 10px #00ffff,
-        0 0 20px #00ffff,
-        0 0 30px #00ffff,
-        0 0 40px #00ffff;
-    }
-    to {
-      text-shadow:
-        0 0 20px #00ffff,
-        0 0 30px #00ffff,
-        0 0 40px #00ffff,
-        0 0 60px #00ffff;
-    }
+    from { text-shadow:0 0 10px #00ffff,0 0 20px #00ffff,0 0 30px #00ffff,0 0 40px #00ffff; }
+    to   { text-shadow:0 0 20px #00ffff,0 0 30px #00ffff,0 0 40px #00ffff,0 0 60px #00ffff; }
   }
 
   #uploadForm {
@@ -69,16 +57,12 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow:
-      0 0 10px #00ffff,
-      inset 0 0 10px #00ffff;
+    box-shadow:0 0 10px #00ffff,inset 0 0 10px #00ffff;
   }
 
   #uploadForm button:hover {
     background: #00b3b3;
-    box-shadow:
-      0 0 20px #00ffff,
-      inset 0 0 20px #00ffff;
+    box-shadow:0 0 20px #00ffff,inset 0 0 20px #00ffff;
     transform: scale(1.05);
   }
 
@@ -97,9 +81,7 @@
     border-radius: 12px;
     padding: 10px;
     width: 280px;
-    box-shadow:
-      0 0 10px #00ffff,
-      inset 0 0 10px #00ffff;
+    box-shadow:0 0 10px #00ffff,inset 0 0 10px #00ffff;
     animation: fadeInUp 0.7s ease forwards;
   }
 
@@ -117,17 +99,13 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
-    box-shadow:
-      0 0 10px #ff0057,
-      inset 0 0 10px #ff0057;
+    box-shadow:0 0 10px #ff0057,inset 0 0 10px #ff0057;
     transition: all 0.3s ease;
   }
 
   .clipCard button:hover {
     background: #cc0047;
-    box-shadow:
-      0 0 20px #ff0057,
-      inset 0 0 20px #ff0057;
+    box-shadow:0 0 20px #ff0057,inset 0 0 20px #ff0057;
     transform: scale(1.05);
   }
 
@@ -140,14 +118,8 @@
   }
 
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    } 
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); } 
+    to   { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
@@ -166,10 +138,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // Configuración Supabase (tus datos aquí)
   const supabaseUrl = 'https://owucpcdmojsksraccwny.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dWNwY2Rtb2pza3NyYWNjd255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMjg1NzQsImV4cCI6MjA3OTYwNDU3NH0.gh9xlOb19aG_2G6tmc46IKay1G4okZiM1ii2wWxB4FY';
-
   const supabase = supabase.createClient(supabaseUrl, supabaseKey);
   const bucketName = 'clips';
 
@@ -182,7 +152,7 @@
     clipList.innerHTML = '';
     message.textContent = 'Cargando clips...';
 
-    const { data, error } = await supabase.storage.from(bucketName).list('', { limit: 100, offset: 0, sortBy: { column: 'created_at', order: 'desc' } });
+    const { data, error } = await supabase.storage.from(bucketName).list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
     
     if (error) {
       message.textContent = 'Error cargando clips.';
@@ -197,28 +167,21 @@
 
     message.textContent = '';
     for (const file of data) {
-      const { data: urlData, error: urlError } = await supabase.storage.from(bucketName).getPublicUrl(file.name);
-      if (urlError) {
-        console.error('Error obteniendo URL:', urlError);
-        continue;
-      }
+      const { data: urlData, error: urlError } = supabase.storage.from(bucketName).getPublicUrl(file.name);
+      if (urlError) { console.error(urlError); continue; }
+      const publicUrl = urlData.publicUrl;
       const clipCard = document.createElement('div');
       clipCard.classList.add('clipCard');
       clipCard.innerHTML = `
-        <video controls preload="metadata" src="${urlData.publicUrl}"></video>
+        <video controls preload="metadata" src="${publicUrl}"></video>
         <button data-filename="${file.name}">Eliminar</button>
       `;
       clipList.appendChild(clipCard);
 
       clipCard.querySelector('button').addEventListener('click', async () => {
-        const confirmed = confirm('¿Seguro quieres eliminar este clip?');
-        if (!confirmed) return;
+        if (!confirm('¿Seguro quieres eliminar este clip?')) return;
         const { error: delError } = await supabase.storage.from(bucketName).remove([file.name]);
-        if (delError) {
-          alert('Error eliminando clip');
-          console.error(delError);
-          return;
-        }
+        if (delError) { alert('Error eliminando clip'); console.error(delError); return; }
         listarClips();
       });
     }
@@ -229,32 +192,20 @@
     message.textContent = '';
 
     const file = fileInput.files[0];
-    if (!file) {
-      message.textContent = 'Por favor selecciona un video.';
-      return;
-    }
-    if (!file.type.startsWith('video/')) {
-      message.textContent = 'El archivo debe ser un video.';
-      return;
-    }
+    if (!file) { message.textContent = 'Selecciona un video.'; return; }
+    if (!file.type.startsWith('video/')) { message.textContent = 'El archivo debe ser un video.'; return; }
 
     const fileName = `${Date.now()}_${file.name}`;
-
     message.textContent = 'Subiendo clip...';
 
-    const { data, error } = await supabase.storage.from(bucketName).upload(fileName, file, { cacheControl: '3600', upsert: false });
-    if (error) {
-      message.textContent = 'Error subiendo clip.';
-      console.error(error);
-      return;
-    }
+    const { error } = await supabase.storage.from(bucketName).upload(fileName, file, { cacheControl: '3600', upsert: false });
+    if (error) { message.textContent = 'Error subiendo clip.'; console.error(error); return; }
 
     message.textContent = 'Clip subido con éxito!';
     fileInput.value = '';
     listarClips();
   });
 
-  // Carga inicial de clips
   listarClips();
 </script>
 
