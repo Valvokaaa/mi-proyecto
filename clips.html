@@ -103,7 +103,7 @@ input[type="file"] {
     z-index: 2;
 }
 
-/* Cada video */
+/* Caja video */
 .video-box {
     border: 2px solid #00eaff;
     padding: 10px;
@@ -121,35 +121,57 @@ video {
 </head>
 <body>
 
-    <h1>🎥 Clips Subidos</h1>
+    <h1>🎥 Clips Guardados</h1>
 
-    <!-- Botón para subir video -->
     <label for="subirVideo" class="label-subir">Subir Clip</label>
-    <input type="file" id="subirVideo" accept="video/*" multiple>
+    <input type="file" id="subirVideo" accept="video/*">
 
-    <!-- Galería donde aparecerán los clips -->
     <div id="galeria"></div>
 
 <script>
+/* === Cargar clips guardados === */
+window.onload = function() {
+    const guardados = JSON.parse(localStorage.getItem("clips")) || [];
+
+    guardados.forEach(dataURL => {
+        agregarClip(dataURL);
+    });
+};
+
+/* === Subir y guardar clips === */
 document.getElementById("subirVideo").addEventListener("change", function(event) {
-    const archivos = event.target.files;
+    const archivo = event.target.files[0];
+    const reader = new FileReader();
 
-    for (let archivo of archivos) {
-        const url = URL.createObjectURL(archivo);
+    reader.onload = function(e) {
+        const dataURL = e.target.result;
 
-        // crear video
-        const contenedor = document.createElement("div");
-        contenedor.classList.add("video-box");
+        // Guardar en LocalStorage
+        let lista = JSON.parse(localStorage.getItem("clips")) || [];
+        lista.push(dataURL);
+        localStorage.setItem("clips", JSON.stringify(lista));
 
-        const video = document.createElement("video");
-        video.src = url;
-        video.controls = true;
+        // Mostrarlo en pantalla
+        agregarClip(dataURL);
+    };
 
-        contenedor.appendChild(video);
-        document.getElementById("galeria").appendChild(contenedor);
-    }
+    reader.readAsDataURL(archivo);
 });
+
+/* === Agregar clip a la galería === */
+function agregarClip(url) {
+    const caja = document.createElement("div");
+    caja.classList.add("video-box");
+
+    const video = document.createElement("video");
+    video.controls = true;
+    video.src = url;
+
+    caja.appendChild(video);
+    document.getElementById("galeria").appendChild(caja);
+}
 </script>
 
 </body>
 </html>
+
