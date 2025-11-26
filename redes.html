@@ -9,115 +9,97 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* Fondo y estilo base */
+/* Fondo gamer futurista */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    color: #00ffff;
+    background: radial-gradient(circle, #0a0014, #000000);
     overflow: hidden;
-    background: linear-gradient(#1a001a, #000000);
-    position: relative;
-}
-
-/* Fondo tipo "grid futurista" */
-body::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,255,255,0.2) 20px, rgba(0,255,255,0.2) 21px),
-                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.2) 20px, rgba(255,0,255,0.2) 21px);
-    background-size: 100% 100%;
-    transform: rotateX(60deg) translateY(50%) scaleY(0.5);
-    z-index: 0;
-    animation: gridMove 5s linear infinite;
-}
-@keyframes gridMove {
-    from { transform: rotateX(60deg) translateY(50%) scaleY(0.5) translateZ(0); }
-    to { transform: rotateX(60deg) translateY(50%) scaleY(0.5) translateZ(-500px); }
+    font-family: Arial;
+    color: cyan;
 }
 
 h1 {
     font-size: 3rem;
-    text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
-    position: relative;
-    z-index: 1;
-    animation: fadeIn 1.5s ease-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
+    text-shadow: 0 0 25px cyan, 0 0 50px #ff00ff;
+    margin-bottom: 20px;
 }
 
-/* Contenedor de botones */
+/* Contenedor */
 .botonera {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    position: relative;
-    z-index: 1;
+    gap: 25px;
+    perspective: 1200px;
 }
 
-/* Botón base */
+/* --- BOTONES 3D EXTREMOS --- */
 .btn {
-    padding: 15px 40px;
-    border-radius: 10px;
+    position: relative;
+    padding: 18px 50px;
+    font-size: 1.6rem;
+    border-radius: 12px;
     color: white;
     text-decoration: none;
-    font-size: 1.6rem;
-    border: 2px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.08);
-    transition: 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    display: inline-block;
-    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     overflow: hidden;
+    border: none;
+    transform-style: preserve-3d;
+    transition: 0.25s ease;
+    cursor: pointer;
+    box-shadow: 
+        0 10px 30px rgba(0,255,255,0.3),
+        inset 0 0 20px rgba(255,255,255,0.2);
+    animation: float 4s ease-in-out infinite;
 }
 
-/* Brillo glitch */
+/* Movimiento flotante */
+@keyframes float {
+    0%   { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+    50%  { transform: translateY(-10px) rotateX(3deg) rotateY(-3deg); }
+    100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+}
+
+/* Glow 3D */
 .btn::before {
     content: "";
     position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-    transition: 0.4s;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+    opacity: 0;
+    transition: 0.25s;
 }
 
-/* Hover glitch */
+/* Hover 3D */
+.btn:hover {
+    transform: translateY(-15px) rotateX(8deg) rotateY(8deg) scale(1.12);
+    box-shadow: 
+        0 20px 45px rgba(0,255,255,0.6),
+        inset 0 0 30px rgba(255,255,255,0.4);
+}
 .btn:hover::before {
-    left: 100%;
+    opacity: 1;
 }
 
-/* Colores específicos */
-.tiktok { border-color: #ff0050; box-shadow: 0 0 15px #ff0050; }
-.instagram { border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff; }
-.youtube { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-.twitch { border-color: #a970ff; box-shadow: 0 0 15px #a970ff; }
+/* Colores por red */
+.tiktok { background: #ff0050; box-shadow: 0 0 25px #ff0050; }
+.instagram { background: #ff00ff; box-shadow: 0 0 25px #ff00ff; }
+.youtube { background: #ff0000; box-shadow: 0 0 25px #ff0000; }
+.twitch { background: #a970ff; box-shadow: 0 0 25px #a970ff; }
+.volver { background: cyan; color: black; box-shadow: 0 0 25px cyan; }
 
-/* Hover neon fuerte */
-.tiktok:hover { background: rgba(255,0,80,0.3); box-shadow: 0 0 25px #ff0050, 0 0 50px #ff0050; transform: scale(1.15); }
-.instagram:hover { background: rgba(255,0,255,0.3); box-shadow: 0 0 25px #ff00ff, 0 0 50px #ff00ff; transform: scale(1.15); }
-.youtube:hover { background: rgba(255,0,0,0.3); box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; transform: scale(1.15); }
-.twitch:hover { background: rgba(169,112,255,0.3); box-shadow: 0 0 25px #a970ff, 0 0 50px #a970ff; transform: scale(1.15); }
-
-/* Volver */
-.volver:hover {
-    background: rgba(0,255,255,0.4);
-    box-shadow: 0 0 25px cyan, 0 0 50px cyan;
-    transform: scale(1.12);
-}
-
-.btn i {
-    margin-right: 12px;
-}
+.btn i { margin-right: 12px; }
 </style>
 </head>
+
 <body>
 
 <h1>Redes Sociales</h1>
@@ -125,23 +107,23 @@ h1 {
 <div class="botonera">
 
     <a href="#" target="_blank" class="btn tiktok">
-        <i class="fab fa-tiktok"></i> TikTok
+        <i class="fab fa-tiktok"></i>TikTok
     </a>
 
     <a href="#" target="_blank" class="btn instagram">
-        <i class="fab fa-instagram"></i> Instagram
+        <i class="fab fa-instagram"></i>Instagram
     </a>
 
     <a href="#" target="_blank" class="btn youtube">
-        <i class="fab fa-youtube"></i> YouTube
+        <i class="fab fa-youtube"></i>YouTube
     </a>
 
     <a href="#" target="_blank" class="btn twitch">
-        <i class="fab fa-twitch"></i> Twitch
+        <i class="fab fa-twitch"></i>Twitch
     </a>
 
     <a href="menu.html" class="btn volver">
-        <i class="fas fa-arrow-left"></i> Volver al Menú
+        <i class="fas fa-arrow-left"></i>Volver
     </a>
 
 </div>
