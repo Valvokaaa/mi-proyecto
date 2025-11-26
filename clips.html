@@ -5,164 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clips - Menú Gamer</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Librería Supabase v2 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <style>
-  body {
+body {
     margin: 0;
-    font-family: "Press Start 2P", cursive, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
     padding: 20px;
     background: linear-gradient(135deg, #120033, #1a0055);
     color: #00ffff;
-    overflow-x: hidden;
-  }
+}
 
-  @keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-    20%, 22%, 24%, 55% { opacity: 0.4; }
-  }
-
-  h1 {
+h1 {
     font-size: 2.5rem;
     text-shadow: 0 0 8px #00ffff, 0 0 20px #ff00ff;
-    animation: flicker 2s infinite;
-    margin-bottom: 20px;
-  }
+}
 
-  .upload-box {
-    margin-bottom: 30px;
-  }
+.upload-box { margin-bottom: 20px; }
 
-  .btn-upload {
-    background: #00ffff;
+button, .btn-menu {
     padding: 12px 25px;
     border-radius: 10px;
-    color: #000;
-    font-weight: bold;
     border: none;
     cursor: pointer;
+    font-weight: bold;
     transition: 0.3s;
-    font-family: "Press Start 2P", cursive;
-  }
+}
 
-  .btn-upload:hover {
-    background: #55ffff;
-    transform: scale(1.1);
-  }
+button {
+    background: #00ffff;
+    color: #000;
+}
 
-  .clips-container {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
+button:hover { background: #55ffff; transform: scale(1.05); }
 
-  video {
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #00ffff;
-  }
+.clips-container { margin-top: 20px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
 
-  .btn-menu {
-    margin-top: 30px;
+video { width: 80%; max-width: 500px; border-radius: 10px; box-shadow: 0 0 15px #00ffff; }
+
+.btn-menu {
     text-decoration: none;
     background: #00aaff;
     color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
     display: inline-block;
-    font-family: "Press Start 2P", cursive;
-    transition: 0.3s;
-  }
+    margin-top: 20px;
+}
 
-  .btn-menu:hover {
-    background: #00eaff;
-    transform: scale(1.05);
-  }
+.btn-menu:hover { background: #00eaff; }
 </style>
 </head>
-
 <body>
 
 <h1>Clips</h1>
 
 <div class="upload-box">
-  <input type="file" id="clipInput" accept="video/*">
-  <button class="btn-upload" onclick="uploadClip()">Subir Clip</button>
+    <input type="file" id="clipInput" accept="video/*">
+    <button id="btnUpload">Subir Clip</button>
 </div>
 
-<h2>Clips Subidos</h2>
 <div id="clipsList" class="clips-container"></div>
 
 <a href="menu.html" class="btn-menu">Volver al menú</a>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const SUPABASE_URL = "https://owucpcdmojsksraccwny.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dWNwY2Rtb2pza3NyYWNjd255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMjg1NzQsImV4cCI6MjA3OTYwNDU3NH0.gh9xlOb19aG_2G6tmc46IKay1G4okZiM1ii2wWxB4FY";
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const SUPABASE_URL = "https://owucpcdmojsksraccwny.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dWNwY2Rtb2pza3NyYWNjd255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMjg1NzQsImV4cCI6MjA3OTYwNDU3NH0.gh9xlOb19aG_2G6tmc46IKay1G4okZiM1ii2wWxB4FY";
+    const btnUpload = document.getElementById("btnUpload");
+    const clipInput = document.getElementById("clipInput");
+    const clipsList = document.getElementById("clipsList");
 
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    async function loadClips() {
+        clipsList.innerHTML = "<p>Cargando clips...</p>";
+        const { data, error } = await supabase.from("videos").select("*");
+        if (error) { clipsList.innerHTML = "<p>Error al cargar clips.</p>"; return; }
+        clipsList.innerHTML = "";
+        if (data.length === 0) { clipsList.innerHTML = "<p>No hay clips subidos aún.</p>"; return; }
+        data.forEach(video => {
+            const vid = document.createElement("video");
+            vid.src = video.url;
+            vid.controls = true;
+            clipsList.appendChild(vid);
+        });
+    }
 
-  // -----------------------
-  // Función para cargar clips
-  // -----------------------
-  async function loadClips() {
-    const list = document.getElementById("clipsList");
-    list.innerHTML = "<p>Cargando clips...</p>";
+    async function uploadClip() {
+        const file = clipInput.files[0];
+        if (!file) { alert("Selecciona un video primero."); return; }
+        const fileName = Date.now() + "-" + file.name;
+        const { error: storageError } = await supabase.storage.from("clips").upload(fileName, file);
+        if (storageError) { alert("Error al subir clip: " + storageError.message); return; }
+        const { data: publicUrl } = supabase.storage.from("clips").getPublicUrl(fileName);
+        await supabase.from("videos").insert([{ url: publicUrl.publicUrl }]);
+        alert("Clip subido correctamente 🎉");
+        clipInput.value = "";
+        loadClips();
+    }
 
-    const { data, error } = await supabase.from("videos").select("*");
-
-    if (error) { list.innerHTML = "<p>Error al cargar clips.</p>"; return; }
-
-    list.innerHTML = "";
-
-    data.forEach(video => {
-      const vid = document.createElement("video");
-      vid.src = video.url;
-      vid.controls = true;
-      list.appendChild(vid);
-    });
-
-    if (data.length === 0) list.innerHTML = "<p>No hay clips subidos aún.</p>";
-  }
-
-  loadClips();
-
-  // -----------------------
-  // Función para subir clip
-  // -----------------------
-  window.uploadClip = async function() {
-    const file = document.getElementById("clipInput").files[0];
-    if (!file) { alert("Selecciona un video primero."); return; }
-
-    const fileName = Date.now() + "-" + file.name;
-
-    // Subida a Storage
-    const { data: storageData, error: storageError } = await supabase
-      .storage
-      .from("clips")
-      .upload(fileName, file);
-
-    if (storageError) { alert("Error al subir el clip: " + storageError.message); return; }
-
-    // Obtener URL pública
-    const { data: publicUrl } = supabase
-      .storage
-      .from("clips")
-      .getPublicUrl(fileName);
-
-    // Guardar en tabla
-    await supabase.from("videos").insert([{ url: publicUrl.publicUrl }]);
-
-    alert("Clip subido correctamente 🎉");
+    btnUpload.addEventListener("click", uploadClip);
 
     loadClips();
-  }
-
 });
 </script>
 
