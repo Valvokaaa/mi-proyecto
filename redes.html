@@ -34,6 +34,9 @@ body::before {
     transform: rotateX(60deg) translateY(50%) scaleY(0.5);
     z-index: 0;
     animation: gridMove 5s linear infinite;
+
+    /* ⭐ FIX: permite hacer clic en botones */
+    pointer-events: none;
 }
 
 @keyframes gridMove {
