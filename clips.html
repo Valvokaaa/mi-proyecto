@@ -88,15 +88,15 @@
 
 <script>
 // -----------------------------------------
-//   CONFIGURACIÓN DE SUPABASE
+// CONFIG DE SUPABASE
 // -----------------------------------------
-const SUPABASE_URL = "https://owucpcdmojsksraccwny.supabase.co"; 
+const SUPABASE_URL = "https://owucpcdmojsksraccwny.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dWNwY2Rtb2pza3NyYWNjd255Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMjg1NzQsImV4cCI6MjA3OTYwNDU3NH0.gh9xlOb19aG_2G6tmc46IKay1G4okZiM1ii2wWxB4FY";
 
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // -----------------------------------------
-//   Cargar clips al abrir la página
+// CARGAR CLIPS GUARDADOS
 // -----------------------------------------
 async function loadClips() {
     const list = document.getElementById("clipsList");
@@ -128,7 +128,7 @@ async function loadClips() {
 loadClips();
 
 // -----------------------------------------
-//   Subir clip al bucket y a la base
+// SUBIR CLIP
 // -----------------------------------------
 async function uploadClip() {
     const file = document.getElementById("clipInput").files[0];
@@ -140,24 +140,24 @@ async function uploadClip() {
 
     const fileName = Date.now() + "-" + file.name;
 
-    // Subir a Storage
+    // subida a storage
     const { data: storageData, error: storageError } = await supabase
         .storage
-        .from("clips")
+        .from("clips") 
         .upload(fileName, file);
 
     if (storageError) {
-        alert("Error al subir el clip.");
+        alert("Error al subir el clip:\n" + storageError.message);
         return;
     }
 
-    // Obtener URL pública
+    // obtener url pública
     const { data: publicUrl } = supabase
         .storage
         .from("clips")
         .getPublicUrl(fileName);
 
-    // Guardar en tabla
+    // guardar url en tabla
     await supabase
         .from("videos")
         .insert([{ url: publicUrl.publicUrl }]);
@@ -166,7 +166,6 @@ async function uploadClip() {
 
     loadClips();
 }
-
 </script>
 
 </body>
