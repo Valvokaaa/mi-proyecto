@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Redes Sociales - Menú Gamer</title>
 
-<!-- ⭐ Importar visor 3D Spline -->
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
-
 <style>
 
 body {
@@ -37,6 +34,8 @@ body::before {
     transform: rotateX(60deg) translateY(50%) scaleY(0.5);
     z-index: 0;
     animation: gridMove 5s linear infinite;
+
+    /* ⭐ Para que no bloquee clicks */
     pointer-events: none;
 }
 
@@ -58,16 +57,7 @@ h1 {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* CONTENEDOR DEL MODELO 3D */
-.model3d {
-    width: 350px;
-    height: 350px;
-    margin-top: -40px;
-    margin-bottom: -10px;
-    z-index: 3;
-}
-
-/* Contenedor tarjetas 3D */
+/* Contenedor de tarjetas 3D */
 .social-container {
     margin-top: 40px;
     display: flex;
@@ -89,38 +79,55 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    /* 3D holográfico */
     transform: perspective(600px) rotateX(10deg);
     transition: 0.4s ease;
     box-shadow: 0 0 20px #00ffff80;
     animation: float 4s ease-in-out infinite;
 }
 
-/* Movimiento flotante */
+/* Movimiento flotante 3D */
 @keyframes float {
     0%   { transform: perspective(600px) translateY(0px) rotateX(10deg); }
     50%  { transform: perspective(600px) translateY(-12px) rotateX(12deg); }
     100% { transform: perspective(600px) translateY(0px) rotateX(10deg); }
 }
 
-/* Hover */
+/* HOVER 3D */
 .social-card:hover {
     transform: perspective(600px) rotateX(2deg) scale(1.07);
     box-shadow: 0 0 25px #00ffff, 0 0 40px #ff00ff;
 }
 
-/* Iconos */
+/* ICONOS */
 .social-card img {
     width: 45px;
     filter: drop-shadow(0 0 10px white);
 }
 
-/* Colores */
-.instagram { background: #E1306C; box-shadow: 0 0 15px #E1306C88; }
-.tiktok    { background: #000000; box-shadow: 0 0 15px #00ffff88; }
-.twitch    { background: #9146FF; box-shadow: 0 0 15px #9146FF88; }
-.youtube   { background: #FF0000; box-shadow: 0 0 15px #FF000088; }
+/* COLORES POR PLATAFORMA */
+.instagram {
+    background: #E1306C;
+    box-shadow: 0 0 15px #E1306C88;
+}
 
-/* Botón menú */
+.tiktok {
+    background: #000000;
+    box-shadow: 0 0 15px #00ffff88;
+}
+
+.twitch {
+    background: #9146FF;
+    box-shadow: 0 0 15px #9146FF88;
+}
+
+.youtube {
+    background: #FF0000;
+    box-shadow: 0 0 15px #FF000088;
+}
+
+/* BOTÓN MENU */
 .btn-menu {
     margin-top: 40px;
     padding: 15px 40px;
@@ -145,11 +152,6 @@ h1 {
 </head>
 <body>
 
-<!-- ⭐ MODELO 3D -->
-<div class="model3d">
-    <spline-viewer url="https://prod.spline.design/0ZCxGmpIzksAKOYP/scene.splinecode"></spline-viewer>
-</div>
-
 <h1>Mis Redes Sociales</h1>
 
 <div class="social-container">
@@ -162,16 +164,16 @@ h1 {
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
     </a>
 
-    <!-- TikTok -->
+    <!-- TikTok (Opción 1 PNG transparente) -->
     <a href="https://www.tiktok.com/@valvokaa.drummer?_r=1&_t=ZS-91jZTybcSDU"
        target="_blank"
        class="social-card tiktok">
         <span>TikTok</span>
-        <img src="https://upload.wikimedia.org/wikipedia/en/0/0a/TikTok_logo.svg">
+        <img src="https://seeklogo.com/images/T/tiktok-icon-logo-B9AC5FE794-seeklogo.com.png">
     </a>
 
     <!-- Twitch -->
-    <a href="https://www.twitch.tv/valutoer"
+    <a href="https://www.twitch.tv/valvoka_ioachdrummer"
        target="_blank"
        class="social-card twitch">
         <span>Twitch</span>
