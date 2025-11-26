@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Redes Sociales - Menú Gamer</title>
+
+<!-- Íconos FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-/* Copia exactamente el mismo CSS que clips.html */
+/* Fondo y estilo base */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -20,6 +24,8 @@ body {
     background: linear-gradient(#1a001a, #000000);
     position: relative;
 }
+
+/* Fondo tipo "grid futurista" */
 body::before {
     content: '';
     position: absolute;
@@ -36,6 +42,7 @@ body::before {
     from { transform: rotateX(60deg) translateY(50%) scaleY(0.5) translateZ(0); }
     to { transform: rotateX(60deg) translateY(50%) scaleY(0.5) translateZ(-500px); }
 }
+
 h1 {
     font-size: 3rem;
     text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
@@ -47,6 +54,8 @@ h1 {
     from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Contenedor de botones */
 .botonera {
     display: flex;
     flex-direction: column;
@@ -54,43 +63,88 @@ h1 {
     position: relative;
     z-index: 1;
 }
+
+/* Botón base */
 .btn {
     padding: 15px 40px;
     border-radius: 10px;
-    background: rgba(0, 255, 255, 0.25);
-    color: #00ffff;
+    color: white;
     text-decoration: none;
-    font-size: 1.5rem;
-    border: 2px solid rgba(0, 255, 255, 0.6);
-    transition: 0.3s, transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
+    font-size: 1.6rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.08);
+    transition: 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-block;
-    text-align: center;
-    animation: botonEntrada 0.8s forwards;
-    opacity: 0;
-    transform: translateY(20px);
+    position: relative;
+    overflow: hidden;
 }
-.btn:nth-child(1) { animation-delay: 0.5s; }
-.btn:nth-child(2) { animation-delay: 0.8s; }
-.btn:nth-child(3) { animation-delay: 1.1s; }
-@keyframes botonEntrada {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+
+/* Brillo glitch */
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.4s;
 }
-.btn:hover {
-    background: rgba(0, 255, 255, 0.5);
-    box-shadow: 0 0 15px #00ffff, 0 0 30px rgba(0, 255, 255, 0.5) inset;
-    transform: scale(1.1);
+
+/* Hover glitch */
+.btn:hover::before {
+    left: 100%;
+}
+
+/* Colores específicos */
+.tiktok { border-color: #ff0050; box-shadow: 0 0 15px #ff0050; }
+.instagram { border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff; }
+.youtube { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+.twitch { border-color: #a970ff; box-shadow: 0 0 15px #a970ff; }
+
+/* Hover neon fuerte */
+.tiktok:hover { background: rgba(255,0,80,0.3); box-shadow: 0 0 25px #ff0050, 0 0 50px #ff0050; transform: scale(1.15); }
+.instagram:hover { background: rgba(255,0,255,0.3); box-shadow: 0 0 25px #ff00ff, 0 0 50px #ff00ff; transform: scale(1.15); }
+.youtube:hover { background: rgba(255,0,0,0.3); box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; transform: scale(1.15); }
+.twitch:hover { background: rgba(169,112,255,0.3); box-shadow: 0 0 25px #a970ff, 0 0 50px #a970ff; transform: scale(1.15); }
+
+/* Volver */
+.volver:hover {
+    background: rgba(0,255,255,0.4);
+    box-shadow: 0 0 25px cyan, 0 0 50px cyan;
+    transform: scale(1.12);
+}
+
+.btn i {
+    margin-right: 12px;
 }
 </style>
 </head>
 <body>
-    <h1>Redes Sociales</h1>
-    <div class="botonera">
-        <a href="#" class="btn">Instagram</a>
-        <a href="#" class="btn">Twitter</a>
-        <a href="#" class="btn">TikTok</a>
-        <a href="menu.html" class="btn">Volver al Menú</a>
-    </div>
+
+<h1>Redes Sociales</h1>
+
+<div class="botonera">
+
+    <a href="#" target="_blank" class="btn tiktok">
+        <i class="fab fa-tiktok"></i> TikTok
+    </a>
+
+    <a href="#" target="_blank" class="btn instagram">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+
+    <a href="#" target="_blank" class="btn youtube">
+        <i class="fab fa-youtube"></i> YouTube
+    </a>
+
+    <a href="#" target="_blank" class="btn twitch">
+        <i class="fab fa-twitch"></i> Twitch
+    </a>
+
+    <a href="menu.html" class="btn volver">
+        <i class="fas fa-arrow-left"></i> Volver al Menú
+    </a>
+
+</div>
+
 </body>
 </html>
