@@ -5,20 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comunidad Gamer - Para Mi Novia</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 /* --------------------------------------------------
-   FONDO NEÓN ANIMADO
+    VARIABLES
+---------------------------------------------------*/
+:root {
+    --color-principal: #ff00ff; /* Magenta Neón */
+    --color-secundario: #00ffff; /* Cyan Neón */
+    --fondo-oscuro: #1a001f;
+}
+
+/* --------------------------------------------------
+    FONDO NEÓN ANIMADO
 ---------------------------------------------------*/
 body {
     margin: 0;
-    font-family: 'Orbitron', Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(120deg, #1a001f, #0d0010);
+    background: linear-gradient(120deg, var(--fondo-oscuro), #0d0010);
     overflow: hidden;
-    color: #ff77ff;
+    color: var(--color-principal);
+    /* El degradado de fondo original es excelente, lo mantengo */
 }
 
 body::before {
@@ -35,44 +47,89 @@ body::before {
 
 @keyframes fondoMover {
     from { transform: translate(0, 0); }
-    to   { transform: translate(-100px, -100px); }
+    to   { transform: translate(-100px, -100px); }
 }
 
 /* --------------------------------------------------
-   CONTENEDOR CENTRAL
+    CONTENEDOR CENTRAL - CON BORDE NEÓN
 ---------------------------------------------------*/
 .contenedor {
     text-align: center;
-    max-width: 800px;
-    padding: 20px;
+    max-width: 700px;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    border: 3px solid var(--color-principal);
+    border-radius: 20px;
+    box-shadow: 0 0 25px var(--color-principal), inset 0 0 15px var(--color-principal);
+    transition: all 0.5s ease;
+    transform: perspective(1px) translateZ(0); /* Para suavizar animaciones en navegadores */
 }
 
 /* --------------------------------------------------
-   TITULOS CON ANIMACION
+    TITULOS CON EFECTO GLITCH Y PULSACIÓN
 ---------------------------------------------------*/
 h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-transform: uppercase;
-    color: #ff00ff;
-    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff77ff, 0 0 30px #ff00ff;
-    animation: tituloAnim 2s ease-in-out infinite alternate;
-    margin-bottom: 30px;
+    color: var(--color-principal);
+    text-shadow: 0 0 15px var(--color-principal), 0 0 30px var(--color-secundario);
+    margin-bottom: 40px;
+    position: relative;
+    /* Animación de pulsación neón original */
+    animation: tituloAnim 2s ease-in-out infinite alternate; 
+}
+
+/* EFECTO GLITCH (Separación de colores RGB) */
+h1::before,
+h1::after {
+    content: attr(data-text); /* Toma el texto del h1 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1::before {
+    left: 2px;
+    text-shadow: -1px 0 var(--color-secundario); /* Shift de color Cyan */
+    animation: glitch 1s infinite alternate-reverse;
+}
+
+h1::after {
+    left: -2px;
+    text-shadow: -1px 0 red; /* Shift de color Rojo/Magenta */
+    animation: glitch 1.5s infinite alternate-reverse;
 }
 
 @keyframes tituloAnim {
-    from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff77ff, 0 0 30px #ff00ff; }
-    to   { text-shadow: 0 0 20px #ff77ff, 0 0 40px #ff00ff, 0 0 60px #ff77ff; }
+    from { opacity: 1; }
+    to   { opacity: 0.9; text-shadow: 0 0 25px var(--color-principal), 0 0 50px var(--color-secundario); }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
 }
 
 /* --------------------------------------------------
-   PARRAGRAFOS CON EFECTO TIPO ESCRITURA
+    PARRAGRAFOS CON EFECTO TIPO ESCRITURA
 ---------------------------------------------------*/
 p {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     line-height: 1.8;
-    color: #ff99ff;
+    color: #ccffff; /* Color más claro para contraste */
+    padding: 5px 0;
+    margin: 15px 0;
+    border-left: 3px solid var(--color-secundario);
+    padding-left: 15px;
+    text-align: left; /* Alineación a la izquierda para mejor lectura */
+    opacity: 0; /* Mantenemos la animación de aparición */
     animation: textoFade 3s ease forwards;
-    opacity: 0;
 }
 
 p:nth-child(2) { animation-delay: 0.5s; }
@@ -81,29 +138,36 @@ p:nth-child(4) { animation-delay: 1.5s; }
 p:nth-child(5) { animation-delay: 2s; }
 
 @keyframes textoFade {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 /* --------------------------------------------------
-   BOTON VOLVER
+    BOTON VOLVER - MEJORADO
 ---------------------------------------------------*/
 .btn-volver {
-    margin-top: 40px;
+    margin-top: 50px;
     display: inline-block;
-    padding: 12px 30px;
-    font-size: 1.3rem;
-    color: #ff00ff;
+    padding: 15px 40px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-secundario); /* Color diferente al fondo */
     text-decoration: none;
-    border: 2px solid #ff00ff;
-    border-radius: 10px;
-    transition: 0.3s ease;
+    background-color: transparent;
+    border: 3px solid var(--color-secundario);
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--color-secundario);
+    transition: 0.4s ease, box-shadow 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .btn-volver:hover {
-    background: #ff00ff22;
-    box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff77ff inset;
-    transform: scale(1.1);
+    color: #000;
+    background: var(--color-secundario);
+    border-color: var(--color-secundario);
+    box-shadow: 0 0 20px var(--color-secundario), 0 0 40px var(--color-secundario), 0 0 60px var(--color-secundario);
+    transform: scale(1.05);
 }
 </style>
 </head>
@@ -111,7 +175,7 @@ p:nth-child(5) { animation-delay: 2s; }
 <body>
 
 <div class="contenedor">
-    <h1>Comunidad Gamer</h1>
+    <h1 data-text="Comunidad Gamer">Comunidad Gamer</h1>
     
     <p>¡Bienvenida a tu espacio, 💖 Aquí podrás compartir tus momentos de juego favoritos y disfrutar de todo lo que te apasiona.</p>
     
