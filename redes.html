@@ -148,42 +148,70 @@ h1 {
     box-shadow: 0 0 15px #00ffff;
 }
 
+/* --------------------------------------------------
+    BOTÓN DE MÚSICA (CSS Copiado)
+---------------------------------------------------*/
+#toggleMusica {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 12px 20px;
+    border-radius: 50%;
+    z-index: 100;
+    font-size: 1.4rem;
+    
+    /* Usamos el color cian/neón que predomina en el fondo */
+    background: rgba(0, 255, 255, 0.25); 
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 15px #00ffff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    outline: none;
+}
+
+#toggleMusica:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff inset;
+    background: rgba(0, 255, 255, 0.4);
+}
 </style>
 </head>
 <body>
 
+<audio id="musicaFondo" loop autoplay>
+    <source src="audio/my universe.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+</audio>
 <h1>Mis Redes Sociales</h1>
 
 <div class="social-container">
 
-    <!-- Instagram -->
     <a href="https://www.instagram.com/valvokaa.ioach.drummer?igsh=a3RxMjEyNXVteHF3"
-       target="_blank"
-       class="social-card instagram">
+        target="_blank"
+        class="social-card instagram">
         <span>Instagram</span>
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
     </a>
 
-    <!-- TikTok (Opción 1 PNG transparente) -->
     <a href="https://www.tiktok.com/@valvokaa.drummer?_r=1&_t=ZS-91jZTybcSDU"
-       target="_blank"
-       class="social-card tiktok">
+        target="_blank"
+        class="social-card tiktok">
         <span>TikTok</span>
         <img src="https://seeklogo.com/images/T/tiktok-icon-logo-B9AC5FE794-seeklogo.com.png">
     </a>
 
-    <!-- Twitch -->
     <a href="https://www.twitch.tv/valvoka_ioachdrummer"
-       target="_blank"
-       class="social-card twitch">
+        target="_blank"
+        class="social-card twitch">
         <span>Twitch</span>
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Twitch_logo.svg">
     </a>
 
-    <!-- YouTube -->
     <a href="https://www.youtube.com/@Valvoka_drummer"
-       target="_blank"
-       class="social-card youtube">
+        target="_blank"
+        class="social-card youtube">
         <span>YouTube</span>
         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
     </a>
@@ -192,5 +220,50 @@ h1 {
 
 <a href="menu.html" class="btn-menu">Volver al Menú</a>
 
+<button id="toggleMusica">♪</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const musica = document.getElementById('musicaFondo');
+        const boton = document.getElementById('toggleMusica');
+        // El estado inicial asume que el 'autoplay' funcionará
+        let estaReproduciendo = true; 
+
+        // 1. Intenta la reproducción inicial (maneja promesas de autoplay)
+        musica.play().then(() => {
+            // Si funciona, el botón muestra la pausa
+            boton.textContent = '⏸️';
+        }).catch(error => {
+            // Si el navegador bloquea el autoplay, el botón muestra el icono de reproducción
+            console.log("El navegador bloqueó el autoplay. El usuario deberá interactuar para que suene.");
+            estaReproduciendo = false; 
+            boton.textContent = '♪';
+        });
+
+        // 2. Control al hacer clic en el botón
+        boton.addEventListener('click', function() {
+            if (estaReproduciendo) {
+                musica.pause();
+                boton.textContent = '♪'; // Icono de música
+            } else {
+                musica.play().catch(error => {
+                    console.error("Error al reproducir el audio:", error);
+                });
+                boton.textContent = '⏸️'; // Icono de pausa
+            }
+            estaReproduciendo = !estaReproduciendo;
+        });
+
+        // 3. Control para mantener el icono correcto si la música se detiene/inicia por otras razones
+        musica.onplay = () => {
+            estaReproduciendo = true;
+            boton.textContent = '⏸️';
+        };
+        musica.onpause = () => {
+            estaReproduciendo = false;
+            boton.textContent = '♪';
+        };
+    });
+</script>
 </body>
 </html>
