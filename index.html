@@ -12,7 +12,12 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
             /* Fondo con imagen y capa oscurecida */
             background: 
                 linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
@@ -20,12 +25,8 @@
             background-size: cover;
 
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            position: relative; 
             overflow: hidden;
-            position: relative; /* Necesario para el botón fijo */
         }
 
         nav {
@@ -33,7 +34,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            z-index: 1; /* Para estar encima del fondo */
+            z-index: 1; 
         }
 
         /* --------------------------------------------------
@@ -42,7 +43,7 @@
         .btn {
             padding: 22px 45px;
             border-radius: 20px;
-            text-decoration: none; /* Asegurar que no haya subrayado */
+            text-decoration: none; 
 
             /* 🌟 Botón mejorado Glassmorphism Gamer */
             background: rgba(0, 255, 255, 0.18);
@@ -95,7 +96,7 @@
             z-index: 100;
             font-size: 1.4rem;
             
-            /* Estilo Neón/Glassmorphism Magenta (para diferenciarse) */
+            /* Estilo Neón/Glassmorphism Magenta */
             background: rgba(255, 0, 255, 0.18);
             backdrop-filter: blur(8px);
             border: 2px solid rgba(255, 0, 255, 0.7);
@@ -118,14 +119,13 @@
     
     <!-- 1. REPRODUCTOR DE AUDIO (Oculto) -->
     <audio id="musicaFondo" loop>
-        <!-- RUTA CONFIRMADA: audio/bts_dynamite.mp3 -->
         <source src="audio/bts_dynamite.mp3" type="audio/mpeg">
         Tu navegador no soporta el audio.
     </audio>
 
     <!-- 2. CONTENIDO PRINCIPAL -->
     <nav>
-        <!-- Nota: He asumido que quieres que este botón lleve a index.html, donde estará el menú completo -->
+        <!-- ¡CORREGIDO! Ahora apunta a index.html, donde está el menú principal -->
         <a href="index.html" class="btn">Menú Gamer</a>
     </nav>
     
@@ -142,17 +142,16 @@
             boton.addEventListener('click', function() {
                 if (estaReproduciendo) {
                     musica.pause();
-                    boton.textContent = '♪'; // Icono de música
+                    boton.textContent = '♪';
                 } else {
                     musica.play().catch(error => {
                         console.error("Error al reproducir el audio:", error);
                     });
-                    boton.textContent = '⏸️'; // Icono de pausa
+                    boton.textContent = '⏸️';
                 }
                 estaReproduciendo = !estaReproduciendo;
             });
 
-            // Actualiza el icono si la música se detiene/inicia por otras razones
             musica.onplay = () => {
                 estaReproduciendo = true;
                 boton.textContent = '⏸️';
@@ -165,5 +164,4 @@
     </script>
 </body>
 </html>
-
 
