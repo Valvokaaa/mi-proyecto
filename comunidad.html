@@ -30,7 +30,6 @@ body {
     background: linear-gradient(120deg, var(--fondo-oscuro), #0d0010);
     overflow: hidden;
     color: var(--color-principal);
-    /* El degradado de fondo original es excelente, lo mantengo */
 }
 
 body::before {
@@ -47,7 +46,7 @@ body::before {
 
 @keyframes fondoMover {
     from { transform: translate(0, 0); }
-    to   { transform: translate(-100px, -100px); }
+    to   { transform: translate(-100px, -100px); }
 }
 
 /* --------------------------------------------------
@@ -104,7 +103,7 @@ h1::after {
 
 @keyframes tituloAnim {
     from { opacity: 1; }
-    to   { opacity: 0.9; text-shadow: 0 0 25px var(--color-principal), 0 0 50px var(--color-secundario); }
+    to   { opacity: 0.9; text-shadow: 0 0 25px var(--color-principal), 0 0 50px var(--color-secundario); }
 }
 
 @keyframes glitch {
@@ -117,7 +116,7 @@ h1::after {
 }
 
 /* --------------------------------------------------
-    PARRAGRAFOS CON EFECTO TIPO ESCRITURA
+    PÁRRAFOS CON EFECTO TIPO ESCRITURA
 ---------------------------------------------------*/
 p {
     font-size: 1.25rem;
@@ -169,11 +168,44 @@ p:nth-child(5) { animation-delay: 2s; }
     box-shadow: 0 0 20px var(--color-secundario), 0 0 40px var(--color-secundario), 0 0 60px var(--color-secundario);
     transform: scale(1.05);
 }
+
+/* --------------------------------------------------
+    BOTÓN DE MÚSICA (CSS)
+---------------------------------------------------*/
+#toggleMusica {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 12px 20px;
+    border-radius: 50%;
+    z-index: 100;
+    font-size: 1.4rem;
+    
+    /* Usamos el color de neón principal */
+    background: rgba(255, 0, 255, 0.25); 
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 0, 255, 0.8);
+    box-shadow: 0 0 15px var(--color-principal);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    outline: none;
+}
+
+#toggleMusica:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px var(--color-principal), 0 0 50px var(--color-principal) inset;
+    background: rgba(255, 0, 255, 0.4);
+}
 </style>
 </head>
 
 <body>
 
+<audio id="musicaFondo" loop autoplay>
+    <source src="audio/Blue_And_Grey.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+</audio>
 <div class="contenedor">
     <h1 data-text="Comunidad Gamer">Comunidad Gamer</h1>
     
@@ -188,5 +220,50 @@ p:nth-child(5) { animation-delay: 2s; }
     <a href="discord.html" class="btn-volver">Volver a Discord y Más</a>
 </div>
 
+<button id="toggleMusica">♪</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const musica = document.getElementById('musicaFondo');
+        const boton = document.getElementById('toggleMusica');
+        // El estado inicial asume que el 'autoplay' funcionará
+        let estaReproduciendo = true; 
+
+        // 1. Intenta la reproducción inicial (maneja promesas de autoplay)
+        musica.play().then(() => {
+            // Si funciona, el botón muestra la pausa
+            boton.textContent = '⏸️';
+        }).catch(error => {
+            // Si el navegador bloquea el autoplay, el botón muestra el icono de reproducción
+            console.log("El navegador bloqueó el autoplay. El usuario deberá interactuar para que suene.");
+            estaReproduciendo = false; 
+            boton.textContent = '♪';
+        });
+
+        // 2. Control al hacer clic en el botón
+        boton.addEventListener('click', function() {
+            if (estaReproduciendo) {
+                musica.pause();
+                boton.textContent = '♪'; // Icono de música
+            } else {
+                musica.play().catch(error => {
+                    console.error("Error al reproducir el audio:", error);
+                });
+                boton.textContent = '⏸️'; // Icono de pausa
+            }
+            estaReproduciendo = !estaReproduciendo;
+        });
+
+        // 3. Control para mantener el icono correcto si la música se detiene/inicia por otras razones
+        musica.onplay = () => {
+            estaReproduciendo = true;
+            boton.textContent = '⏸️';
+        };
+        musica.onpause = () => {
+            estaReproduciendo = false;
+            boton.textContent = '♪';
+        };
+    });
+</script>
 </body>
 </html>
