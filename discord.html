@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Discord - Menú Gamer</title>
 
 <style>
-/* --------------------------------------------------
-   FONDO CYBERPUNK GRID 3D PRO (LILA)
----------------------------------------------------*/
 body {
     margin: 0;
     font-family: "Orbitron", Arial, sans-serif;
@@ -16,10 +13,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* profundidad 3D */
     perspective: 1500px;
-
     background: radial-gradient(circle at center, #25002d, #0d0010 80%);
     overflow: hidden;
 }
@@ -30,29 +24,17 @@ body::before {
     position: absolute;
     width: 200%;
     height: 200%;
-
     background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0 25px,
-            rgba(200, 0, 255, 0.35) 25px 27px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent 0 25px,
-            rgba(200, 0, 255, 0.35) 25px 27px
-        );
-
+        repeating-linear-gradient(0deg, transparent 0 25px, rgba(200,0,255,0.35) 25px 27px),
+        repeating-linear-gradient(90deg, transparent 0 25px, rgba(200,0,255,0.35) 25px 27px);
     transform: rotateX(70deg) translateY(220px);
     transform-origin: top;
-
     animation: gridMove 6s linear infinite;
     opacity: 0.5;
 }
-
 @keyframes gridMove {
     from { transform: rotateX(70deg) translateY(220px) translateZ(0); }
-    to   { transform: rotateX(70deg) translateY(220px) translateZ(-500px); }
+    to { transform: rotateX(70deg) translateY(220px) translateZ(-500px); }
 }
 
 /* NIEBLA MORADA CYBERPUNK */
@@ -61,149 +43,110 @@ body::after {
     position: absolute;
     width: 200%;
     height: 200%;
-
     background:
         radial-gradient(circle at 30% 80%, #7b00ff44, transparent 60%),
         radial-gradient(circle at 70% 20%, #ff00ff33, transparent 70%),
         radial-gradient(circle at 50% 50%, #c200ff22, transparent 60%);
-
     filter: blur(80px);
     animation: fogMove 12s ease-in-out infinite alternate;
     opacity: 0.65;
 }
-
 @keyframes fogMove {
-    from { transform: scale(1) translate(0, 0); }
-    to   { transform: scale(1.2) translate(30px, -40px); }
+    from { transform: scale(1) translate(0,0); }
+    to { transform: scale(1.2) translate(30px,-40px); }
 }
 
-/* --------------------------------------------------
-     CONTENEDOR PRINCIPAL 3D
----------------------------------------------------*/
+/* CONTENEDOR PRINCIPAL 3D */
 .contenedor {
     position: relative;
     z-index: 10;
-    background: rgba(25, 0, 40, 0.45);
-    border: 2px solid rgba(200, 0, 255, 0.4);
+    background: rgba(25,0,40,0.45);
+    border: 2px solid rgba(200,0,255,0.4);
     padding: 40px 60px;
     border-radius: 20px;
     backdrop-filter: blur(8px);
-
-    box-shadow:
-        0 0 30px rgba(200, 0, 255, 0.4),
-        inset 0 0 20px rgba(100, 0, 150, 0.4);
-
+    box-shadow: 0 0 30px rgba(200,0,255,0.4), inset 0 0 20px rgba(100,0,150,0.4);
     transform: rotateY(10deg) rotateX(5deg);
     animation: panelFloat 6s ease-in-out infinite alternate;
 }
-
 @keyframes panelFloat {
     from { transform: rotateY(10deg) rotateX(5deg) translateY(0); }
-    to   { transform: rotateY(-10deg) rotateX(-3deg) translateY(-15px); }
+    to { transform: rotateY(-10deg) rotateX(-3deg) translateY(-15px); }
 }
 
-/* --------------------------------------------------
-                     TÍTULO
----------------------------------------------------*/
+/* TÍTULO */
 h1 {
     text-align: center;
     font-size: 2.8rem;
     color: #d46cff;
-    text-shadow:
-        0 0 15px #d46cff,
-        0 0 30px #9f00ff;
+    text-shadow: 0 0 15px #d46cff, 0 0 30px #9f00ff;
     margin-bottom: 40px;
     animation: aparecer 1s ease;
 }
-
 @keyframes aparecer {
     from { opacity: 0; transform: translateY(-30px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* --------------------------------------------------
-                   BOTONES 3D
----------------------------------------------------*/
+/* BOTONES 3D */
 .botonera {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-
 .btn {
+    position: relative;
     padding: 15px 35px;
-    background: rgba(210, 0, 255, 0.15);
+    background: rgba(210,0,255,0.15);
     color: #e38cff;
-    border: 2px solid rgba(220, 0, 255, 0.5);
+    border: 2px solid rgba(220,0,255,0.5);
     border-radius: 12px;
     font-size: 1.4rem;
     text-decoration: none;
     cursor: pointer;
     text-align: center;
     transition: 0.35s ease;
-
-    /* Efecto 3D */
     transform-style: preserve-3d;
     transform: translateZ(0px);
-    box-shadow:
-        0 0 18px rgba(200, 0, 255, 0.5),
-        inset 0 0 15px rgba(200, 0, 255, 0.25);
+    box-shadow: 0 0 18px rgba(200,0,255,0.5), inset 0 0 15px rgba(200,0,255,0.25);
 }
-
 .btn::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: rgba(200, 0, 255, 0.4);
+    background: rgba(200,0,255,0.4);
     filter: blur(25px);
     z-index: -1;
     opacity: 0;
     transition: 0.4s;
 }
-
-/* Hover 3D */
 .btn:hover {
     transform: translateZ(25px) scale(1.1);
-    background: rgba(220, 0, 255, 0.35);
-    box-shadow:
-        0 0 25px #ff78ff,
-        0 0 40px #c700ff inset;
+    background: rgba(220,0,255,0.35);
+    box-shadow: 0 0 25px #ff78ff, 0 0 40px #c700ff inset;
 }
+.btn:hover::before { opacity: 1; }
 
-.btn:hover::before {
-    opacity: 1;
-}
-
-/* Animación escalonada */
 .btn:nth-child(1) { animation: entrada 0.5s ease forwards; }
 .btn:nth-child(2) { animation: entrada 0.8s ease forwards; }
 .btn:nth-child(3) { animation: entrada 1.1s ease forwards; }
-
 @keyframes entrada {
     from { opacity: 0; transform: translateY(40px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
-
 <div class="contenedor">
-
     <h1>Canal de Discord y Más</h1>
-
     <div class="botonera">
-
         <a href="https://discord.gg/DfDjv4BJ" class="btn" target="_blank">Unirse al Discord</a>
-
-        <a href="foros.html" class="btn">Foros y Comunidad</a> <!-- Aquí el enlace corregido -->
-
+        <a href="foros.html" class="btn">Foros y Comunidad</a>
         <a href="menu.html" class="btn">Volver al Menú</a>
-
     </div>
-
 </div>
-
 </body>
 </html>
+
