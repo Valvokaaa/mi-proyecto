@@ -6,159 +6,60 @@
 <title>Comunidad - Menú Gamer</title>
 
 <style>
-body {
+  body {
     margin: 0;
     font-family: "Orbitron", Arial, sans-serif;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    perspective: 1500px;
     background: radial-gradient(circle at center, #25002d, #0d0010 80%);
-    overflow: hidden;
-}
-
-body::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background:
-        repeating-linear-gradient(0deg, transparent 0 25px, rgba(200,0,255,0.35) 25px 27px),
-        repeating-linear-gradient(90deg, transparent 0 25px, rgba(200,0,255,0.35) 25px 27px);
-    transform: rotateX(70deg) translateY(220px);
-    transform-origin: top;
-    animation: gridMove 6s linear infinite;
-    opacity: 0.5;
-}
-@keyframes gridMove {
-    from { transform: rotateX(70deg) translateY(220px) translateZ(0); }
-    to { transform: rotateX(70deg) translateY(220px) translateZ(-500px); }
-}
-
-body::after {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background:
-        radial-gradient(circle at 30% 80%, #7b00ff44, transparent 60%),
-        radial-gradient(circle at 70% 20%, #ff00ff33, transparent 70%),
-        radial-gradient(circle at 50% 50%, #c200ff22, transparent 60%);
-    filter: blur(80px);
-    animation: fogMove 12s ease-in-out infinite alternate;
-    opacity: 0.65;
-}
-@keyframes fogMove {
-    from { transform: scale(1) translate(0,0); }
-    to { transform: scale(1.2) translate(30px,-40px); }
-}
-
-.contenedor {
-    position: relative;
-    z-index: 10;
-    background: rgba(25,0,40,0.45);
-    border: 2px solid rgba(200,0,255,0.4);
-    padding: 40px 60px;
-    border-radius: 20px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 30px rgba(200,0,255,0.4), inset 0 0 20px rgba(100,0,150,0.4);
-    transform: rotateY(10deg) rotateX(5deg);
-    animation: panelFloat 6s ease-in-out infinite alternate;
-}
-@keyframes panelFloat {
-    from { transform: rotateY(10deg) rotateX(5deg) translateY(0); }
-    to { transform: rotateY(-10deg) rotateX(-3deg) translateY(-15px); }
-}
-
-h1 {
-    text-align: center;
-    font-size: 2.8rem;
     color: #d46cff;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
     text-shadow: 0 0 15px #d46cff, 0 0 30px #9f00ff;
-    margin-bottom: 40px;
-    animation: aparecer 1s ease;
-}
-@keyframes aparecer {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+  }
 
-.contenido {
-    color: #e38cff;
-    font-size: 1.5rem;
-    text-align: center;
-    max-width: 400px;
-    margin: 0 auto 30px;
-    line-height: 1.4;
-}
-
-.botonera {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.btn {
-    position: relative;
-    padding: 15px 35px;
-    background: rgba(210, 0, 255, 0.15);
-    color: #e38cff;
-    border: 2px solid rgba(220, 0, 255, 0.5);
-    border-radius: 12px;
+  p {
     font-size: 1.4rem;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px #9f00ff;
+  }
+
+  a {
+    color: #e38cff;
     text-decoration: none;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.35s ease;
-    transform-style: preserve-3d;
-    transform: translateZ(0px);
-    box-shadow: 0 0 18px rgba(200, 0, 255, 0.5), inset 0 0 15px rgba(200, 0, 255, 0.25);
-}
+    font-weight: bold;
+    margin-top: 20px;
+  }
 
-.btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: rgba(200, 0, 255, 0.4);
-    filter: blur(25px);
-    z-index: -1;
-    opacity: 0;
-    transition: 0.4s;
-}
-
-.btn:hover {
-    transform: translateZ(25px) scale(1.1);
-    background: rgba(220, 0, 255, 0.35);
-    box-shadow: 0 0 25px #ff78ff, 0 0 40px #c700ff inset;
-}
-
-.btn:hover::before {
-    opacity: 1;
-}
-
-.btn:nth-child(1) { animation: entrada 0.5s ease forwards; }
-.btn:nth-child(2) { animation: entrada 0.8s ease forwards; }
-.btn:nth-child(3) { animation: entrada 1.1s ease forwards; }
-
-@keyframes entrada {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+  a:hover {
+    text-decoration: underline;
+  }
 </style>
-</head>
 
+</head>
 <body>
-<div class="contenedor">
-    <h1>Comunidad</h1>
-    <p class="contenido">
-        ¡Bienvenido a la comunidad de jugadores! Aquí puedes compartir tus experiencias, tips y mucho más.
-    </p>
-    <div class="botonera">
-        <a href="discord.html" class="btn">Volver al Discord</a>
-        <a href="menu.html" class="btn">Volver al Menú</a>
-    </div>
-</div>
+
+  <h1>Comunidad</h1>
+
+  <p>Bienvenido a la comunidad de jugadores más vibrante y activa. Aquí encontrarás un espacio para compartir tus experiencias, descubrir nuevos juegos y conectar con personas que comparten tu pasión.</p>
+
+  <p>Participa en debates, encuentra consejos útiles, y mantente al día con las últimas noticias del mundo gamer. Nuestra comunidad está abierta para todos, desde principiantes hasta expertos.</p>
+
+  <p>No olvides respetar a los demás miembros y contribuir de forma positiva para que todos podamos disfrutar y aprender juntos.</p>
+
+  <p>¡Únete a los eventos, torneos y charlas para mejorar tu nivel y hacer nuevos amigos!</p>
+
+  <a href="discord.html">Volver a Discord</a> | <a href="menu.html">Volver al Menú</a>
+
 </body>
 </html>
