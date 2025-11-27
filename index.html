@@ -6,6 +6,9 @@
     <title>Menú Gamer</title>
 
     <style>
+        /* --------------------------------------------------
+            ESTILOS BASE Y FONDO
+        ---------------------------------------------------*/
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -22,19 +25,26 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            position: relative; /* Necesario para el botón fijo */
         }
 
         nav {
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            z-index: 1; /* Para estar encima del fondo */
         }
 
-        /* 🌟 Botón mejorado Glassmorphism Gamer */
+        /* --------------------------------------------------
+            BOTÓN PRINCIPAL (Menú Gamer)
+        ---------------------------------------------------*/
         .btn {
             padding: 22px 45px;
             border-radius: 20px;
+            text-decoration: none; /* Asegurar que no haya subrayado */
 
+            /* 🌟 Botón mejorado Glassmorphism Gamer */
             background: rgba(0, 255, 255, 0.18);
             backdrop-filter: blur(12px);
 
@@ -72,13 +82,88 @@
             50% { transform: translateY(-12px); }
             100% { transform: translateY(0px); }
         }
+
+        /* --------------------------------------------------
+            BOTÓN DE MÚSICA (Fondo flotante)
+        ---------------------------------------------------*/
+        #toggleMusica {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            padding: 12px 20px;
+            border-radius: 50%;
+            z-index: 100;
+            font-size: 1.4rem;
+            
+            /* Estilo Neón/Glassmorphism Magenta (para diferenciarse) */
+            background: rgba(255, 0, 255, 0.18);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 0, 255, 0.7);
+            box-shadow: 0 0 15px #ff00ff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+            outline: none;
+        }
+
+        #toggleMusica:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ff00ff, 0 0 50px #ff00ff inset;
+            background: rgba(255, 0, 255, 0.28);
+        }
     </style>
 </head>
 
 <body>
+    
+    <!-- 1. REPRODUCTOR DE AUDIO (Oculto) -->
+    <audio id="musicaFondo" loop>
+        <!-- RUTA CONFIRMADA: audio/bts_dynamite.mp3 -->
+        <source src="audio/bts_dynamite.mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+    </audio>
+
+    <!-- 2. CONTENIDO PRINCIPAL -->
     <nav>
-        <a href="menu.html" class="btn">Menú Gamer</a>
+        <!-- Nota: He asumido que quieres que este botón lleve a index.html, donde estará el menú completo -->
+        <a href="index.html" class="btn">Menú Gamer</a>
     </nav>
+    
+    <!-- 3. BOTÓN DE CONTROL DE MÚSICA -->
+    <button id="toggleMusica">♪</button>
+
+    <!-- 4. SCRIPT DE JAVASCRIPT para Controlar la Música -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const musica = document.getElementById('musicaFondo');
+            const boton = document.getElementById('toggleMusica');
+            let estaReproduciendo = false;
+
+            boton.addEventListener('click', function() {
+                if (estaReproduciendo) {
+                    musica.pause();
+                    boton.textContent = '♪'; // Icono de música
+                } else {
+                    musica.play().catch(error => {
+                        console.error("Error al reproducir el audio:", error);
+                    });
+                    boton.textContent = '⏸️'; // Icono de pausa
+                }
+                estaReproduciendo = !estaReproduciendo;
+            });
+
+            // Actualiza el icono si la música se detiene/inicia por otras razones
+            musica.onplay = () => {
+                estaReproduciendo = true;
+                boton.textContent = '⏸️';
+            };
+            musica.onpause = () => {
+                estaReproduciendo = false;
+                boton.textContent = '♪';
+            };
+        });
+    </script>
 </body>
 </html>
+
 
