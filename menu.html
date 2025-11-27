@@ -145,14 +145,11 @@
 </head>
 <body>
 
-    <!-- 1. REPRODUCTOR DE AUDIO (Oculto) -->
-    <!-- RUTA CONFIRMADA: audio/bts_dynamite.mp3 -->
     <audio id="musicaFondo" loop>
-        <source src="audio/bts_dynamite.mp3" type="audio/mpeg">
+        <source src="audio/life_goes_on.mp3" type="audio/mpeg">
         Tu navegador no soporta el audio.
     </audio>
 
-    <!-- 2. CONTENIDO PRINCIPAL CENTRADO -->
     <div class="contenido-principal">
         <h1>Bienvenido al Menú Gamer 🎮</h1>
 
@@ -163,30 +160,31 @@
         </div>
     </div>
     
-    <!-- 3. BOTÓN DE CONTROL DE MÚSICA -->
     <button id="toggleMusica">♪</button>
 
-    <!-- 4. SCRIPT DE JAVASCRIPT para Controlar la Música -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const musica = document.getElementById('musicaFondo');
             const boton = document.getElementById('toggleMusica');
             let estaReproduciendo = false;
 
+            // Intenta reproducir al hacer clic.
             boton.addEventListener('click', function() {
                 if (estaReproduciendo) {
                     musica.pause();
                     boton.textContent = '♪'; // Icono de música
                 } else {
+                    // El método .play() devuelve una promesa. Usamos .catch() para manejar errores de autoplay.
                     musica.play().catch(error => {
-                        console.error("Error al reproducir el audio:", error);
+                        console.error("Error al reproducir el audio (el navegador pudo haber bloqueado el autoplay):", error);
+                        // Opcional: Mostrar un mensaje al usuario si la reproducción falla
                     });
                     boton.textContent = '⏸️'; // Icono de pausa
                 }
                 estaReproduciendo = !estaReproduciendo;
             });
 
-            // Actualiza el icono si la música se detiene/inicia por otras razones
+            // Actualiza el icono si la música se detiene/inicia por otras razones (como al cambiar de pestaña)
             musica.onplay = () => {
                 estaReproduciendo = true;
                 boton.textContent = '⏸️';
