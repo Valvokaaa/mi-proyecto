@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página del Menú Gamer</title>
     <style>
+        /* --------------------------------------------------
+            ESTILOS BASE Y FONDO
+        ---------------------------------------------------*/
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -13,19 +16,38 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            /* Fondo con imagen y capa oscurecida */
             background: url("imagenes/kwai.jpg") no-repeat center center fixed;
             background-size: cover;
             color: #00aaff;
             position: relative;
+            overflow: hidden; /* Asegura que el botón fixed no cause scroll */
         }
 
+        /* Capa oscurecedora para contraste */
         body::before {
             content: "";
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.55); /* Ligeramente más oscuro para el texto */
             z-index: 0;
+        }
+
+        /* --------------------------------------------------
+            CONTENEDOR DEL MENÚ
+        ---------------------------------------------------*/
+        .contenido-principal {
+            /* Contenedor wrapper para centrar el h1 y botonera */
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
+            max-width: 90%;
+            width: 450px;
         }
 
         h1 {
@@ -47,20 +69,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             position: relative;
             z-index: 1;
         }
 
+        /* --------------------------------------------------
+            BOTONES DE NAVEGACIÓN
+        ---------------------------------------------------*/
         .btn {
-            padding: 15px 40px;
+            padding: 18px 40px;
+            width: 100%; /* Para que todos tengan el mismo ancho */
             border-radius: 10px;
+            text-decoration: none;
             background: rgba(0, 170, 255, 0.2);
             backdrop-filter: blur(5px);
             color: #00aaff;
-            text-decoration: none;
             font-size: 1.5rem;
-            border: 2px solid rgba(0, 170, 255, 0.5);
+            font-weight: bold;
+            border: 2px solid rgba(0, 170, 255, 0.7);
             transition: 0.3s, transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
             display: inline-block;
@@ -68,12 +95,12 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInButton 0.8s forwards;
+            box-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
         }
 
         .btn:nth-child(1) { animation-delay: 0.5s; }
         .btn:nth-child(2) { animation-delay: 0.8s; }
         .btn:nth-child(3) { animation-delay: 1.1s; }
-        .btn:nth-child(4) { animation-delay: 1.4s; }
 
         @keyframes fadeInButton {
             from { opacity: 0; transform: translateY(20px); }
@@ -82,20 +109,93 @@
 
         .btn:hover {
             background: rgba(0, 170, 255, 0.4);
-            box-shadow: 0 0 15px #00aaff, 0 0 30px rgba(0, 170, 255, 0.5) inset;
+            box-shadow: 0 0 20px #00aaff, 0 0 40px rgba(0, 170, 255, 0.6) inset;
+            transform: scale(1.05);
+        }
+
+        /* --------------------------------------------------
+            BOTÓN DE MÚSICA (Fondo flotante - Neón Azul)
+        ---------------------------------------------------*/
+        #toggleMusica {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            padding: 12px 20px;
+            border-radius: 50%;
+            z-index: 100;
+            font-size: 1.4rem;
+            
+            /* Usamos el color Neón Azul */
+            background: rgba(0, 170, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0, 170, 255, 0.8);
+            box-shadow: 0 0 15px #00aaff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+            outline: none;
+        }
+
+        #toggleMusica:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 25px #00aaff, 0 0 50px #00aaff inset;
+            background: rgba(0, 170, 255, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <h1>Bienvenido al Menú Gamer 🎮</h1>
+    <!-- 1. REPRODUCTOR DE AUDIO (Oculto) -->
+    <!-- RUTA CONFIRMADA: audio/bts_dynamite.mp3 -->
+    <audio id="musicaFondo" loop>
+        <source src="audio/bts_dynamite.mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+    </audio>
 
-    <div class="botonera">
-        <a href="redes.html" class="btn">Redes Sociales</a>
-        <a href="discord.html" class="btn">Canal de Discord y más</a>
-        <a href="index.html" class="btn">Volver al Inicio</a>
+    <!-- 2. CONTENIDO PRINCIPAL CENTRADO -->
+    <div class="contenido-principal">
+        <h1>Bienvenido al Menú Gamer 🎮</h1>
+
+        <div class="botonera">
+            <a href="redes.html" class="btn">Redes Sociales</a>
+            <a href="discord.html" class="btn">Canal de Discord y más</a>
+            <a href="index.html" class="btn">Volver al Inicio</a>
+        </div>
     </div>
+    
+    <!-- 3. BOTÓN DE CONTROL DE MÚSICA -->
+    <button id="toggleMusica">♪</button>
 
+    <!-- 4. SCRIPT DE JAVASCRIPT para Controlar la Música -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const musica = document.getElementById('musicaFondo');
+            const boton = document.getElementById('toggleMusica');
+            let estaReproduciendo = false;
+
+            boton.addEventListener('click', function() {
+                if (estaReproduciendo) {
+                    musica.pause();
+                    boton.textContent = '♪'; // Icono de música
+                } else {
+                    musica.play().catch(error => {
+                        console.error("Error al reproducir el audio:", error);
+                    });
+                    boton.textContent = '⏸️'; // Icono de pausa
+                }
+                estaReproduciendo = !estaReproduciendo;
+            });
+
+            // Actualiza el icono si la música se detiene/inicia por otras razones
+            musica.onplay = () => {
+                estaReproduciendo = true;
+                boton.textContent = '⏸️';
+            };
+            musica.onpause = () => {
+                estaReproduciendo = false;
+                boton.textContent = '♪';
+            };
+        });
+    </script>
 </body>
 </html>
