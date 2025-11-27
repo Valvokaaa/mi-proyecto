@@ -283,10 +283,37 @@ h1::after {
 }
 
 /* --------------------------------------------------
+    BOTÓN DE MÚSICA (Copiado de menu.html)
+---------------------------------------------------*/
+#toggleMusica {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 12px 20px;
+    border-radius: 50%;
+    z-index: 100;
+    font-size: 1.4rem;
+    
+    /* Usamos el color Neón Azul */
+    background: rgba(0, 170, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(0, 170, 255, 0.8);
+    box-shadow: 0 0 15px #00aaff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    outline: none;
+}
+
+#toggleMusica:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #00aaff, 0 0 50px #00aaff inset;
+    background: rgba(0, 170, 255, 0.4);
+}
+
+/* --------------------------------------------------
     ELEMENTO DECORATIVO "AUDIO VISUALIZER"
 ---------------------------------------------------*/
-/* Para evitar que el visualizador se muestre si la música no está sonando, 
-   o para usarlo solo como decoración estática en esta página */
 .audio-visualizer {
     position: absolute;
     bottom: 20px;
@@ -348,16 +375,50 @@ h1::after {
     </div>
 </div>
 
+<button id="toggleMusica">♪</button>
+
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const musica = document.getElementById('musicaFondo');
-        // Intenta reproducir el audio. Esto es crucial porque muchos navegadores
-        // bloquean el 'autoplay' sin interacción del usuario.
-        musica.play().catch(error => {
+        const boton = document.getElementById('toggleMusica');
+        // El estado inicial asume que el 'autoplay' funcionará, pero puede fallar
+        let estaReproduciendo = true; 
+
+        // 1. Intenta la reproducción inicial (maneja promesas de autoplay)
+        musica.play().then(() => {
+            // Si funciona, el botón muestra la pausa
+            boton.textContent = '⏸️';
+        }).catch(error => {
+            // Si el navegador bloquea el autoplay, el botón muestra el icono de reproducción
             console.log("El navegador bloqueó el autoplay. El usuario deberá interactuar para que suene.");
+            estaReproduciendo = false; 
+            boton.textContent = '♪';
         });
+
+        // 2. Control al hacer clic en el botón
+        boton.addEventListener('click', function() {
+            if (estaReproduciendo) {
+                musica.pause();
+                boton.textContent = '♪'; // Icono de música
+            } else {
+                musica.play().catch(error => {
+                    console.error("Error al reproducir el audio:", error);
+                });
+                boton.textContent = '⏸️'; // Icono de pausa
+            }
+            estaReproduciendo = !estaReproduciendo;
+        });
+
+        // 3. Control para mantener el icono correcto si la música se detiene/inicia por otras razones
+        musica.onplay = () => {
+            estaReproduciendo = true;
+            boton.textContent = '⏸️';
+        };
+        musica.onpause = () => {
+            estaReproduciendo = false;
+            boton.textContent = '♪';
+        };
     });
 </script>
-
 </body>
 </html>
