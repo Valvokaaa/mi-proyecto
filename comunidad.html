@@ -1,47 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comunidad - Menú Gamer</title>
+
 <style>
+/* --------------------------------------------------
+   FONDO NEÓN ANIMADO
+---------------------------------------------------*/
 body {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-    background: #120024;
-    color: #d46cff;
-    line-height: 1.6;
+    margin: 0;
+    font-family: 'Orbitron', Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(120deg, #2a003f, #0d0010);
+    overflow: hidden;
+    color: #ff77ff;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255, 0, 255, 0.15) 30px, rgba(255, 0, 255, 0.15) 32px),
+        repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0, 255, 255, 0.15) 30px, rgba(0, 255, 255, 0.15) 32px);
+    animation: fondoMover 10s linear infinite;
+    z-index: -1;
+}
+
+@keyframes fondoMover {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-100px, -100px); }
+}
+
+/* --------------------------------------------------
+   CONTENEDOR CENTRAL
+---------------------------------------------------*/
+.contenedor {
+    text-align: center;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* --------------------------------------------------
+   TITULOS CON ANIMACION
+---------------------------------------------------*/
 h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 3rem;
+    text-transform: uppercase;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff77ff, 0 0 30px #ff00ff;
+    animation: tituloAnim 2s ease-in-out infinite alternate;
+    margin-bottom: 30px;
 }
+
+@keyframes tituloAnim {
+    from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff77ff, 0 0 30px #ff00ff; }
+    to   { text-shadow: 0 0 20px #ff77ff, 0 0 40px #ff00ff, 0 0 60px #ff77ff; }
+}
+
+/* --------------------------------------------------
+   PARRAGRAFOS CON EFECTO TIPO ESCRITURA
+---------------------------------------------------*/
 p {
-    max-width: 600px;
-    margin: 10px auto;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #ff99ff;
+    animation: textoFade 3s ease forwards;
+    opacity: 0;
 }
-a {
-    color: #e38cff;
-    text-decoration: none;
-    display: block;
-    text-align: center;
+
+p:nth-child(2) { animation-delay: 0.5s; }
+p:nth-child(3) { animation-delay: 1s; }
+p:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes textoFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------
+   BOTON VOLVER
+---------------------------------------------------*/
+.btn-volver {
     margin-top: 40px;
-    font-size: 1.2rem;
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1.3rem;
+    color: #ff00ff;
+    text-decoration: none;
+    border: 2px solid #ff00ff;
+    border-radius: 10px;
+    transition: 0.3s ease;
 }
-a:hover {
-    text-decoration: underline;
+
+.btn-volver:hover {
+    background: #ff00ff22;
+    box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff77ff inset;
+    transform: scale(1.1);
 }
 </style>
 </head>
-<body>
-<h1>Comunidad</h1>
-<p>Bienvenido a la comunidad del Menú Gamer.</p>
-<p>Aquí compartimos noticias, consejos, eventos y mucho más sobre gaming.</p>
-<p>Únete a nuestras conversaciones y conecta con otros gamers apasionados.</p>
 
-<a href="discord.html">Volver al Discord</a>
-<a href="menu.html">Volver al Menú</a>
+<body>
+
+<div class="contenedor">
+    <h1>Comunidad Gamer</h1>
+    
+    <p>¡Bienvenido a nuestra comunidad! Aquí encontrarás a jugadores de todo el mundo compartiendo experiencias, tips y noticias de los últimos juegos.</p>
+    
+    <p>Participa en debates, comparte tus clips, y únete a torneos exclusivos de nuestra comunidad.</p>
+    
+    <p>No olvides respetar las normas y disfrutar del ambiente. ¡Todos somos gamers!</p>
+    
+    <a href="discord.html" class="btn-volver">Volver a Discord y Más</a>
+</div>
+
 </body>
 </html>
