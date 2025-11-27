@@ -99,7 +99,7 @@ body::after {
     transform-style: preserve-3d;
     transform: rotateY(15deg) rotateX(8deg) translateZ(0); /* Rotación 3D inicial */
     animation: containerFloat 8s ease-in-out infinite alternate,
-               containerGlow 3s ease-in-out infinite alternate;
+                containerGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes containerFloat {
@@ -285,6 +285,8 @@ h1::after {
 /* --------------------------------------------------
     ELEMENTO DECORATIVO "AUDIO VISUALIZER"
 ---------------------------------------------------*/
+/* Para evitar que el visualizador se muestre si la música no está sonando, 
+   o para usarlo solo como decoración estática en esta página */
 .audio-visualizer {
     position: absolute;
     bottom: 20px;
@@ -324,6 +326,10 @@ h1::after {
 
 <body>
 
+<audio id="musicaFondo" loop autoplay>
+    <source src="audio/Nigth_Changes.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+</audio>
 <div class="contenedor">
     <h1 data-text="Discord & Comunidad">Discord & Comunidad</h1>
     <div class="botonera">
@@ -341,6 +347,17 @@ h1::after {
         <div class="bar"></div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const musica = document.getElementById('musicaFondo');
+        // Intenta reproducir el audio. Esto es crucial porque muchos navegadores
+        // bloquean el 'autoplay' sin interacción del usuario.
+        musica.play().catch(error => {
+            console.log("El navegador bloqueó el autoplay. El usuario deberá interactuar para que suene.");
+        });
+    });
+</script>
 
 </body>
 </html>
