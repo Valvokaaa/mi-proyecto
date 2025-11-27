@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Gamer</title>
+    <title>Inicio | Proyecto Gamer</title> 
 
     <style>
         /* --------------------------------------------------
@@ -117,22 +117,17 @@
 
 <body>
     
-    <!-- 1. REPRODUCTOR DE AUDIO (Oculto) -->
     <audio id="musicaFondo" loop>
         <source src="audio/bts_dynamite.mp3" type="audio/mpeg">
         Tu navegador no soporta el audio.
     </audio>
 
-    <!-- 2. CONTENIDO PRINCIPAL -->
     <nav>
-        <!-- ¡CORREGIDO! Ahora apunta a index.html, donde está el menú principal -->
-        <a href="index.html" class="btn">Menú Gamer</a>
+        <a href="menu.html" class="btn">Menú Gamer</a>
     </nav>
     
-    <!-- 3. BOTÓN DE CONTROL DE MÚSICA -->
     <button id="toggleMusica">♪</button>
 
-    <!-- 4. SCRIPT DE JAVASCRIPT para Controlar la Música -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const musica = document.getElementById('musicaFondo');
