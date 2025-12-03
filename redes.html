@@ -7,6 +7,9 @@
 
 <style>
 
+/* --------------------------------------------------
+    ESTILOS BASE Y FONDO (DEFAULT: PC)
+---------------------------------------------------*/
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -18,13 +21,13 @@ body {
     text-align: center;
     color: #00ffff;
     overflow: hidden;
-    background: linear-gradient(#1a001a, #000000);
     position: relative;
 
-     background: 
-                linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-                url("imagenes/colosus.jpg") no-repeat center center fixed;
-            background-size: cover;
+    /* Fondo de imagen, FIJO por defecto (para PC) */
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url("imagenes/colosus.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
     
 
@@ -37,11 +40,11 @@ body::before {
     background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,255,255,0.2) 20px, rgba(0,255,255,0.2) 21px),
                 repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,0,255,0.2) 20px, rgba(255,0,255,0.2) 21px);
     background-size: 100% 100%;
+    /* 3D y animación para PC */
     transform: rotateX(60deg) translateY(50%) scaleY(0.5);
     z-index: 0;
     animation: gridMove 5s linear infinite;
 
-    /* ⭐ Para que no bloquee clicks */
     pointer-events: none;
 }
 
@@ -51,7 +54,7 @@ body::before {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 3rem; /* Tamaño PC */
     text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
     position: relative;
     z-index: 1;
@@ -63,7 +66,7 @@ h1 {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Contenedor de tarjetas 3D */
+/* Contenedor de tarjetas */
 .social-container {
     margin-top: 40px;
     display: flex;
@@ -71,11 +74,13 @@ h1 {
     gap: 25px;
     position: relative;
     z-index: 2;
+    /* Asegurar que el contenedor no sea más ancho que la pantalla en móvil */
+    max-width: 90%; 
 }
 
-/* TARJETAS 3D */
+/* TARJETAS 3D (DEFAULT: PC) */
 .social-card {
-    width: 260px;
+    width: 260px; /* Ancho fijo para PC */
     padding: 18px 20px;
     border-radius: 15px;
     text-decoration: none;
@@ -112,28 +117,13 @@ h1 {
     filter: drop-shadow(0 0 10px white);
 }
 
-/* COLORES POR PLATAFORMA */
-.instagram {
-    background: #E1306C;
-    box-shadow: 0 0 15px #E1306C88;
-}
+/* COLORES POR PLATAFORMA (Mantener) */
+.instagram { background: #E1306C; box-shadow: 0 0 15px #E1306C88; }
+.tiktok { background: #000000; box-shadow: 0 0 15px #00ffff88; }
+.twitch { background: #9146FF; box-shadow: 0 0 15px #9146FF88; }
+.youtube { background: #FF0000; box-shadow: 0 0 15px #FF000088; }
 
-.tiktok {
-    background: #000000;
-    box-shadow: 0 0 15px #00ffff88;
-}
-
-.twitch {
-    background: #9146FF;
-    box-shadow: 0 0 15px #9146FF88;
-}
-
-.youtube {
-    background: #FF0000;
-    box-shadow: 0 0 15px #FF000088;
-}
-
-/* BOTÓN MENU */
+/* BOTÓN MENU (DEFAULT: PC) */
 .btn-menu {
     margin-top: 40px;
     padding: 15px 40px;
@@ -155,7 +145,7 @@ h1 {
 }
 
 /* --------------------------------------------------
-    BOTÓN DE MÚSICA (CSS Copiado)
+    BOTÓN DE MÚSICA (DEFAULT: PC)
 ---------------------------------------------------*/
 #toggleMusica {
     position: fixed;
@@ -166,7 +156,6 @@ h1 {
     z-index: 100;
     font-size: 1.4rem;
     
-    /* Usamos el color cian/neón que predomina en el fondo */
     background: rgba(0, 255, 255, 0.25); 
     backdrop-filter: blur(8px);
     border: 2px solid rgba(0, 255, 255, 0.8);
@@ -181,6 +170,76 @@ h1 {
     transform: scale(1.1);
     box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff inset;
     background: rgba(0, 255, 255, 0.4);
+}
+
+
+/* ==================================================
+    ADAPTACIÓN PARA MÓVILES (Media Query: Pantallas de 600px o menos)
+   ================================================== */
+@media (max-width: 600px) {
+    
+    /* 1. Optimización del Fondo y Grid para la fluidez */
+    body {
+        /* Cambiar de 'fixed' a 'scroll' para mejor rendimiento */
+        background-attachment: scroll; 
+    }
+
+    body::before {
+        /* Desactivar la animación y la rotación 3D del grid en móviles */
+        transform: none; 
+        animation: none;
+        background-size: 50% 50%; /* Reducir el tamaño del grid si se ve muy denso */
+    }
+
+    /* 2. Ajuste del Título */
+    h1 {
+        font-size: 2.5rem; /* Reducir el tamaño del título */
+        margin-top: 30px;
+    }
+
+    /* 3. Ajuste de Tarjetas de Redes Sociales */
+    .social-container {
+        gap: 15px; /* Reducir el espacio entre tarjetas */
+        margin-top: 30px;
+    }
+
+    .social-card {
+        width: 100%; /* Ocupar el 100% del contenedor social-container (que tiene max-width: 90%) */
+        padding: 15px; /* Reducir el padding */
+        font-size: 1.4rem; /* Reducir el tamaño de la fuente */
+        
+        /* 🛑 ELIMINAR EFECTOS 3D DE ROTACIÓN Y FLOTADO para mejor legibilidad */
+        transform: none; 
+        animation: none;
+    }
+
+    .social-card:hover {
+        /* Ajustar el hover a un simple scale en 2D */
+        transform: scale(1.03); 
+    }
+
+    .social-card img {
+        width: 35px; /* Reducir el tamaño de los iconos */
+    }
+
+    /* 4. Ajuste del Botón de Menú */
+    .btn-menu {
+        margin-top: 30px;
+        padding: 12px 30px;
+        font-size: 1.3rem;
+    }
+
+    .btn-menu:hover {
+        transform: scale(1.05); 
+    }
+
+    /* 5. Ajuste del Botón de Música */
+    #toggleMusica {
+        bottom: 15px; 
+        right: 15px;
+        padding: 10px 15px; 
+        font-size: 1.2rem; 
+    }
 }
 </style>
 </head>
@@ -198,28 +257,28 @@ h1 {
         target="_blank"
         class="social-card instagram">
         <span>Instagram</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon">
     </a>
 
     <a href="https://www.tiktok.com/@valvokaa.drummer?_r=1&_t=ZS-91jZTybcSDU"
         target="_blank"
         class="social-card tiktok">
         <span>TikTok</span>
-        <img src="https://seeklogo.com/images/T/tiktok-icon-logo-B9AC5FE794-seeklogo.com.png">
+        <img src="https://seeklogo.com/images/T/tiktok-icon-logo-B9AC5FE794-seeklogo.com.png" alt="TikTok Icon">
     </a>
 
     <a href="https://www.twitch.tv/valvoka_ioachdrummer"
         target="_blank"
         class="social-card twitch">
         <span>Twitch</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Twitch_logo.svg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Twitch_logo.svg" alt="Twitch Icon">
     </a>
 
     <a href="https://www.youtube.com/@Valvoka_drummer"
         target="_blank"
         class="social-card youtube">
         <span>YouTube</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Icon">
     </a>
 
 </div>
