@@ -18,7 +18,7 @@
             align-items: center;
             text-align: center;
             
-            /* Fondo con imagen y capa oscurecida */
+            /* Fondo con imagen, capa oscurecida y FIJO por defecto (para PC) */
             background: 
                 linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
                 url("imagenes/bt21.jpg") no-repeat center center fixed;
@@ -45,13 +45,12 @@
             border-radius: 20px;
             text-decoration: none; 
 
-            /* 🌟 Botón mejorado Glassmorphism Gamer */
+            /* Estilos Glassmorphism/Neón */
             background: rgba(0, 255, 255, 0.18);
             backdrop-filter: blur(12px);
-
             border: 2px solid rgba(0, 255, 255, 0.7);
             color: white;
-            font-size: 2.1rem; /* Tamaño grande para PC */
+            font-size: 2.1rem; /* Tamaño para PC */
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -63,11 +62,10 @@
 
             transition: 0.4s ease;
             cursor: pointer;
-
             animation: flotar 3s ease-in-out infinite;
         }
 
-        /* Hover brillante */
+        /* Hover brillante (PC) */
         .btn:hover {
             transform: scale(1.1);
             box-shadow:
@@ -114,39 +112,36 @@
         }
 
         /* ==================================================
-            ADAPTACIÓN PARA MÓVILES (Media Query)
+            ADAPTACIÓN PARA MÓVILES (Media Query: Pantallas de 600px o menos)
            ================================================== */
         @media (max-width: 600px) {
             
-            /* 1. Ajuste del Botón Principal para Móviles */
+            /* 1. Optimización del Fondo para Móviles */
+            body {
+                /* Cambiar de 'fixed' a 'scroll' mejora el rendimiento y la visualización en móviles */
+                background-attachment: scroll; 
+            }
+
+            /* 2. Ajuste del Botón Principal para Móviles */
             .btn {
                 padding: 15px 30px; /* Reducir el padding */
                 font-size: 1.5rem;  /* Reducir el tamaño de la fuente */
-                letter-spacing: 1px; /* Reducir el espaciado de letras */
-                /* Asegurarse de que las sombras neón sigan siendo visibles */
-                box-shadow:
+                letter-spacing: 1px; /* Reducir el espaciado */
+                box-shadow: /* Reducir las sombras para un look más limpio en móvil */
                     0 0 15px #00eaff,
                     0 0 30px #00eaff inset;
             }
 
             .btn:hover {
-                /* Ajustar el tamaño del hover para que no sea excesivo en pantallas pequeñas */
-                transform: scale(1.05); 
+                transform: scale(1.05); /* Reducir el efecto hover en móvil */
             }
 
-            /* 2. Ajuste del Botón de Música para Móviles */
+            /* 3. Ajuste del Botón de Música para Móviles */
             #toggleMusica {
-                /* Mover el botón un poco más hacia la esquina para no estorbar tanto */
-                bottom: 15px; 
+                bottom: 15px; /* Mover más cerca de la esquina */
                 right: 15px;
-                padding: 10px 15px; /* Reducir el tamaño del padding */
+                padding: 10px 15px; /* Reducir el tamaño */
                 font-size: 1.2rem; /* Reducir la fuente del icono */
-            }
-            
-            /* 3. Asegurar que el fondo fijo no cause problemas */
-            body {
-                /* Esto ayuda a que el fondo se vea bien incluso si el contenido no ocupa toda la altura */
-                background-attachment: scroll; 
             }
         }
     </style>
@@ -196,3 +191,4 @@
     </script>
 </body>
 </html>
+
