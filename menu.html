@@ -6,7 +6,7 @@
     <title>Bienvenidos a Valvoka Works</title>
     <style>
         /* --------------------------------------------------
-            ESTILOS BASE Y FONDO
+            ESTILOS BASE Y FONDO (DEFAULT: PC)
         ---------------------------------------------------*/
         body {
             margin: 0;
@@ -16,12 +16,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Fondo con imagen y capa oscurecida */
+            /* Fondo con imagen, FIJO por defecto (para PC) */
             background: url("imagenes/kwai.jpg") no-repeat center center fixed;
             background-size: cover;
             color: #00aaff;
             position: relative;
-            overflow: hidden; /* Asegura que el botón fixed no cause scroll */
+            overflow: hidden;
         }
 
         /* Capa oscurecedora para contraste */
@@ -30,28 +30,27 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.55); /* Ligeramente más oscuro para el texto */
+            background: rgba(0, 0, 0, 0.55);
             z-index: 0;
         }
 
         /* --------------------------------------------------
-            CONTENEDOR DEL MENÚ
+            CONTENEDOR DEL MENÚ (DEFAULT: PC)
         ---------------------------------------------------*/
         .contenido-principal {
-            /* Contenedor wrapper para centrar el h1 y botonera */
             position: relative;
             z-index: 1;
-            padding: 40px;
+            padding: 40px; /* Padding para PC */
             background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
             backdrop-filter: blur(8px);
             box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
             max-width: 90%;
-            width: 450px;
+            width: 450px; /* Ancho fijo para PC */
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3rem; /* Tamaño para PC */
             margin-bottom: 40px;
             text-shadow: 0 0 10px #00aaff;
             position: relative;
@@ -75,17 +74,17 @@
         }
 
         /* --------------------------------------------------
-            BOTONES DE NAVEGACIÓN
+            BOTONES DE NAVEGACIÓN (DEFAULT: PC)
         ---------------------------------------------------*/
         .btn {
-            padding: 18px 40px;
-            width: 100%; /* Para que todos tengan el mismo ancho */
+            padding: 18px 40px; /* Padding para PC */
+            width: 100%;
             border-radius: 10px;
             text-decoration: none;
             background: rgba(0, 170, 255, 0.2);
             backdrop-filter: blur(5px);
             color: #00aaff;
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Tamaño para PC */
             font-weight: bold;
             border: 2px solid rgba(0, 170, 255, 0.7);
             transition: 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -114,7 +113,7 @@
         }
 
         /* --------------------------------------------------
-            BOTÓN DE MÚSICA (Fondo flotante - Neón Azul)
+            BOTÓN DE MÚSICA (DEFAULT: PC)
         ---------------------------------------------------*/
         #toggleMusica {
             position: fixed;
@@ -125,7 +124,6 @@
             z-index: 100;
             font-size: 1.4rem;
             
-            /* Usamos el color Neón Azul */
             background: rgba(0, 170, 255, 0.25);
             backdrop-filter: blur(8px);
             border: 2px solid rgba(0, 170, 255, 0.8);
@@ -140,6 +138,52 @@
             transform: scale(1.1);
             box-shadow: 0 0 25px #00aaff, 0 0 50px #00aaff inset;
             background: rgba(0, 170, 255, 0.4);
+        }
+
+        /* ==================================================
+            ADAPTACIÓN PARA MÓVILES (Media Query: Pantallas de 600px o menos)
+           ================================================== */
+        @media (max-width: 600px) {
+            
+            /* 1. Optimización del Fondo */
+            body {
+                background-attachment: scroll; 
+            }
+
+            /* 2. Ajuste del Título */
+            h1 {
+                font-size: 2.2rem; /* Reducir el tamaño del título principal */
+                margin-bottom: 30px;
+            }
+
+            /* 3. Ajuste del Contenedor Principal */
+            .contenido-principal {
+                padding: 30px 20px; /* Reducir el padding alrededor del contenido */
+                width: 90%; /* Asegurar que no sea más ancho que la pantalla */
+                max-width: none; /* Permitir que ocupe más espacio si es necesario */
+            }
+
+            /* 4. Ajuste de Botones de Navegación */
+            .botonera {
+                gap: 15px; /* Reducir el espacio entre botones */
+            }
+
+            .btn {
+                padding: 15px 25px; /* Reducir el padding de los botones */
+                font-size: 1.2rem; /* Reducir el tamaño de la fuente */
+            }
+
+            .btn:hover {
+                transform: scale(1.03); /* Reducir el efecto hover en móvil */
+            }
+
+            /* 5. Ajuste del Botón de Música */
+            #toggleMusica {
+                bottom: 15px; 
+                right: 15px;
+                padding: 10px 15px; 
+                font-size: 1.2rem; 
+            }
         }
     </style>
 </head>
@@ -174,10 +218,8 @@
                     musica.pause();
                     boton.textContent = '♪'; // Icono de música
                 } else {
-                    // El método .play() devuelve una promesa. Usamos .catch() para manejar errores de autoplay.
                     musica.play().catch(error => {
                         console.error("Error al reproducir el audio (el navegador pudo haber bloqueado el autoplay):", error);
-                        // Opcional: Mostrar un mensaje al usuario si la reproducción falla
                     });
                     boton.textContent = '⏸️'; // Icono de pausa
                 }
